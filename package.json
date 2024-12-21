@@ -1,0 +1,14 @@
+{
+  "name": "shadow-cljs-phaser",
+  "version": "1.0.0",
+  "scripts": {
+    "watch": "shadow-cljs watch game",
+    "release": "shadow-cljs release game"
+  },
+  "devDependencies": {
+    "shadow-cljs": "^2.28.20"
+  },
+  "dependencies": {
+    "phaser": "^3.87.0"
+  }
+}

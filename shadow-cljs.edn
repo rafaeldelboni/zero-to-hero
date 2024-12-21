@@ -1,0 +1,21 @@
+{:source-paths ["src" "dev"]
+ :dependencies []
+ :dev-http {5000 ["resources/public"]}
+ :builds {:game {:target     :browser
+                 :output-dir "resources/public/js"
+                 :asset-path "/js"
+                 :modules {:core {:entries [game.core]}}
+                 :devtools {:preloads [game.dev.refresh]}
+                 ; bundling
+                 :js-options  {:js-provider :external
+                               :external-index "resources/public/js/lib.js"
+                               :external-index-format :esm}
+                 :build-hooks [(game.dev.shadow.hooks/esbuild
+                                "resources/public/js/lib.js"
+                                "resources/public/js/lib.bundle.js")
+                               (game.dev.shadow.hooks/hashed-files
+                                ["resources/public/js/core.js"
+                                 "resources/public/js/lib.bundle.js"])
+                               (game.dev.shadow.hooks/replace-hashed-files
+                                "resources/index.src.html"
+                                "resources/public/index.html")]}}}
