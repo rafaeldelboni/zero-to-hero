@@ -5,7 +5,8 @@
                  :output-dir "resources/public/js"
                  :asset-path "/js"
                  :modules {:core {:entries [game.core]}}
-                 :devtools {:preloads [game.dev.refresh]}
+                 :devtools {:preloads [game.dev.refresh]
+                            :reload-strategy :full}
                  ; bundling
                  :js-options  {:js-provider :external
                                :external-index "resources/public/js/lib.js"

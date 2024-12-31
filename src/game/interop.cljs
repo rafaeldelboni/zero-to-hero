@@ -2,6 +2,8 @@
   (:require
    [goog.object :as obj]))
 
+(def debug? goog.DEBUG)
+
 (defn oassoc! [^js/Object coll k v]
   (let [prop (if (keyword? k) (name k) k)]
     (obj/set coll prop v)))

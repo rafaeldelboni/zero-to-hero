@@ -79,13 +79,14 @@
 
     (-> ctx .-physics .-world (.enable container))
     (doto (.-body container)
-      (.setCollideWorldBounds true))
+      (.setCollideWorldBounds true)
+      (.setBounce 0.0))
 
     container))
 
 (defn- idle [^js/Object player]
   (play-container-animations! player "idle")
-  (-> player .-body (.setVelocity 0 0)))
+  (-> player .-body (.setVelocityX 0)))
 
 ; TODO move game toward platform to make jump works
 (defn- jump [^js/Object player velocity]
@@ -105,19 +106,19 @@
       :down (.setVelocityY body velocity)))
   (play-container-animations! player "walk"))
 
-(defn obj-create [^js/Object ctx]
+(defn game-create [^js/Object ctx]
   (create-all-animations! ctx)
   (create-container! ctx))
 
-(defn obj-update [^js/Object ctx]
+(defn game-update [^js/Object ctx]
   (let [player (oget ctx :player)
+        body ^js/Object (.-body player)
         cursors ^js/Object (oget ctx :cursors)]
     (cond
       (-> cursors .-left .-isDown) (move player :left 150)
       (-> cursors .-right .-isDown) (move player :right 150)
       (-> cursors .-down .-isDown) (move player :down 150)
       :else (idle player))
-
     (cond
-      ((-> Input .-Keyboard .-JustDown) (.-up cursors)) (jump player 250)
-      (-> player .-body .-blocked .-down) (oassoc! player :jumping false))))
+      ((-> Input .-Keyboard .-JustDown) (.-up cursors)) (jump player 800)
+      (-> body .-blocked .-down) (oassoc! player :jumping false))))

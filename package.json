@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "watch": "shadow-cljs watch game",
-    "release": "shadow-cljs release game"
+    "release": "shadow-cljs release game",
+    "start": "npm run watch"
   },
   "devDependencies": {
     "shadow-cljs": "^2.28.20"

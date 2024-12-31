@@ -1,23 +1,11 @@
 (ns game.core
   (:require
    ["phaser" :refer [AUTO Game Scale]]
-   [game.interop :refer [oassoc!]]
-   [game.player :as player]))
+   [game.interop :refer [debug?]]
+   [game.preload :as preload]
+   [game.test-level :as test-level]))
 
 (defonce state (atom {}))
-
-(defn game-preload []
-  (this-as ^js/Object this
-    (-> this .-load (.aseprite "hero" "assets/sprites/hero.png" "assets/sprites/hero.json"))))
-
-(defn game-create []
-  (this-as ^js/Object this
-    (oassoc! this :player (player/obj-create this))
-    (oassoc! this :cursors (-> this .-input .-keyboard (.createCursorKeys)))))
-
-(defn game-update []
-  (this-as ^js/Object this
-    (player/obj-update this)))
 
 (def config {:type AUTO
              :parent "game"
@@ -26,14 +14,15 @@
              :pixelArt true
              :backgroundColor "#ffffff"
              :physics {:default "arcade"
-                       :arcade {:gravity {:y 0}
-                                :debug true}}
+                       :arcade {:gravity {:y 2000}
+                                :debug debug?}}
              :scale {:mode (.-FIT Scale)
                      :autoCenter (.-CENTER_BOTH Scale)}
-             :scene [{:key "main-scene"
-                      :preload game-preload
-                      :create game-create
-                      :update game-update}]})
+             :scene [{:key "preload"
+                      :preload preload/game-preload}
+                     {:key "test-level"
+                      :create test-level/game-create
+                      :update test-level/game-update}]})
 
 (defn ^:export init []
   (when-let [^js/Object game (:game @state)]
