@@ -27,3 +27,10 @@ npm run release
 gzip resources/public/js/*.js
 npx http-server resources/public -g
 ```
+
+## Tools
+- [aseprite](https://www.aseprite.org/)
+- [tiled](https://www.mapeditor.org/)
+
+## Credits
+- https://kenney.nl/assets/1-bit-platformer-pack

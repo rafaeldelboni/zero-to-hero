@@ -79,7 +79,7 @@
 
     (-> ctx .-physics .-world (.enable container))
     (doto (.-body container)
-      (.setCollideWorldBounds true)
+      ; (.setCollideWorldBounds true)
       (.setBounce 0.0))
 
     container))

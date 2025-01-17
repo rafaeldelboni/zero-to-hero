@@ -12,7 +12,6 @@
              :width 400
              :height 300
              :pixelArt true
-             :backgroundColor "#ffffff"
              :physics {:default "arcade"
                        :arcade {:gravity {:y 2000}
                                 :debug debug?}}
@@ -21,6 +20,7 @@
              :scene [{:key "preload"
                       :preload preload/game-preload}
                      {:key "test-level"
+                      :preload test-level/game-preload
                       :create test-level/game-create
                       :update test-level/game-update}]})
 
