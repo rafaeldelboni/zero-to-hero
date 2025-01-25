@@ -1,6 +1,6 @@
 (ns game.preload)
 
-(defn game-preload []
+(defn preload! []
   (this-as ^js/Object this
     (-> this .-load
       (.aseprite "hero" "assets/sprites/hero.png" "assets/sprites/hero.json"))

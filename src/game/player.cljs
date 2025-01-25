@@ -34,9 +34,8 @@
 
 (defn- play-container-animations!
   [^js/Object container ^js/String state]
-  ; TODO check jumping?
-  (when (not= (oget container :prev-animation) state)
-    (oassoc! container :prev-animation state)
+  (when (not= (oget container :prev-state) state)
+    (oassoc! container :prev-state state)
     (let [key-maps (get-key-maps state)]
       (doseq [{:keys [sufix key-name]} key-maps]
         (.play (.getByName container sufix) key-name)))))
@@ -79,24 +78,28 @@
 
     (-> ctx .-physics .-world (.enable container))
     (doto (.-body container)
-      ; (.setCollideWorldBounds true)
       (.setBounce 0.0))
 
     container))
 
-(defn- idle [^js/Object player]
-  (play-container-animations! player "idle")
-  (-> player .-body (.setVelocityX 0)))
+(defn- on-floor? [^js/Object container]
+  (when-let [body (-> container .-body)]
+    (-> body .-blocked .-down)))
 
-; TODO move game toward platform to make jump works
+(defn- jumping? [^js/Object player]
+  (not (zero? (.-y (.-velocity (.-body player))))))
+
+(defn- idle [^js/Object player]
+  (-> player .-body (.setVelocityX 0))
+  (when-not (jumping? player)
+    (play-container-animations! player "idle")))
+
 (defn- jump [^js/Object player velocity]
-  (oassoc! player :jumping true)
-  (play-container-animations! player "jump")
-  (.setVelocityY (.-body player) (* velocity -1)))
+  (.setVelocityY (.-body player) (* velocity -1))
+  (play-container-animations! player "jump"))
 
 (defn- move [^js/Object player direction velocity]
   (let [body ^js/Object (.-body player)]
-    ; TODO check jumping
     (case direction
       :left (do (.setVelocityX body (* velocity -1))
                 (flip-x-container-sprites! player true))
@@ -104,21 +107,22 @@
                  (flip-x-container-sprites! player false))
       :up (.setVelocityY body (* velocity -1))
       :down (.setVelocityY body velocity)))
-  (play-container-animations! player "walk"))
+  (when-not (jumping? player)
+    (play-container-animations! player "walk")))
 
-(defn game-create [^js/Object ctx]
+(defn create! [^js/Object ctx]
   (create-all-animations! ctx)
   (create-container! ctx))
 
-(defn game-update [^js/Object ctx]
+(defn update! [^js/Object ctx]
   (let [player (oget ctx :player)
-        body ^js/Object (.-body player)
         cursors ^js/Object (oget ctx :cursors)]
     (cond
       (-> cursors .-left .-isDown) (move player :left 150)
       (-> cursors .-right .-isDown) (move player :right 150)
       (-> cursors .-down .-isDown) (move player :down 150)
       :else (idle player))
-    (cond
-      ((-> Input .-Keyboard .-JustDown) (.-up cursors)) (jump player 800)
-      (-> body .-blocked .-down) (oassoc! player :jumping false))))
+
+    (when (and ((-> Input .-Keyboard .-JustDown) (.-up cursors))
+               (on-floor? player))
+      (jump player 400))))

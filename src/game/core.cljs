@@ -12,17 +12,18 @@
              :width 400
              :height 300
              :pixelArt true
+             :audio {:disableWebAudio true} ;; TODO
              :physics {:default "arcade"
                        :arcade {:gravity {:y 2000}
                                 :debug debug?}}
              :scale {:mode (.-FIT Scale)
                      :autoCenter (.-CENTER_BOTH Scale)}
              :scene [{:key "preload"
-                      :preload preload/game-preload}
+                      :preload preload/preload!}
                      {:key "test-level"
-                      :preload test-level/game-preload
-                      :create test-level/game-create
-                      :update test-level/game-update}]})
+                      :preload test-level/preload!
+                      :create test-level/create!
+                      :update test-level/update!}]})
 
 (defn ^:export init []
   (when-let [^js/Object game (:game @state)]

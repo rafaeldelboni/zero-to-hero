@@ -3,14 +3,14 @@
    [game.interop :refer [oassoc!]]
    [game.player :as player]))
 
-(defn game-preload []
+(defn preload! []
   (this-as ^js/Object this
     (-> this .-load
       (.tilemapTiledJSON "level1" "assets/level1.json"))))
 
-(defn game-create []
+(defn create! []
   (this-as ^js/Object this
-    (let [player (player/game-create this)
+    (let [player (player/create! this)
           cursors (-> this .-input .-keyboard (.createCursorKeys))
           level (-> this .-make (.tilemap #js {:key "level1"}))
           tileset (.addTilesetImage level "monochrome" "monochrome-sheet")
@@ -22,6 +22,6 @@
       (oassoc! this :cursors cursors)
       (oassoc! this :level level))))
 
-(defn game-update []
+(defn update! []
   (this-as ^js/Object this
-    (player/game-update this)))
+    (player/update! this)))
