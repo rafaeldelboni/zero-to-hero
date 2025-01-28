@@ -14,3 +14,15 @@
   ([^js/Object coll k not-found]
    (let [prop (if (keyword? k) (name k) k)]
      (obj/get coll prop not-found))))
+
+(defn oupdate!
+  ([^js/Object m k f]
+   (oassoc! m k (f (oget m k))))
+  ([^js/Object m k f x]
+   (oassoc! m k (f (oget m k) x)))
+  ([^js/Object m k f x y]
+   (oassoc! m k (f (oget m k) x y)))
+  ([^js/Object m k f x y z]
+   (oassoc! m k (f (oget m k) x y z)))
+  ([^js/Object m k f x y z & more]
+   (oassoc! m k (apply f (oget m k) x y z more))))

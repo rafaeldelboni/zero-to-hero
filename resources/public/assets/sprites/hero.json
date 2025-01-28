@@ -378,21 +378,21 @@
     "duration": 125
    },
    {
-    "filename": "blob-torso-0",
-    "frame": { "x": 160, "y": 224, "w": 32, "h": 32 },
+    "filename": "blob-empty-0",
+    "frame": { "x": 192, "y": 224, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
-    "sourceSize": { "w": 32, "h": 32 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
     "duration": 250
    },
    {
-    "filename": "blob-empty-0",
-    "frame": { "x": 160, "y": 160, "w": 32, "h": 32 },
+    "filename": "blob-torso-0",
+    "frame": { "x": 208, "y": 224, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
-    "sourceSize": { "w": 32, "h": 32 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
     "duration": 250
    },
    {
@@ -424,7 +424,7 @@
    },
    {
     "filename": "idle-legs-1",
-    "frame": { "x": 192, "y": 224, "w": 32, "h": 32 },
+    "frame": { "x": 160, "y": 224, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },

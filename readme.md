@@ -28,6 +28,24 @@ gzip resources/public/js/*.js
 npx http-server resources/public -g
 ```
 
+## TODO
+- [x] **Handle blob transformation**
+    - [x] Play animation 
+    - [x] Resize body (physics)
+    - [x] Don't let player change forms if inside tunel
+- [ ] **Push boxes**
+    - [ ] Don't let player change forms if above pushable
+    - [ ] Find pushable object sprite in tiled spritesheet
+    - [ ] Fix jumping? when over pushable
+    - [ ] Play animation
+- [ ] **Attack destructibles**
+    - [ ] Play animation
+    - [ ] Collision + effect
+- [ ] **Interact with levers**
+- [ ] **Pickups**
+- [ ] **Receive damage**
+- [ ] **Consider current form & level to allow/deny actions like jump, push, attack**
+
 ## Tools
 - [aseprite](https://www.aseprite.org/)
 - [tiled](https://www.mapeditor.org/)
