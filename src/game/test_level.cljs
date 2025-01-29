@@ -22,7 +22,19 @@
     (.addMultiple boxes push)
     (doseq [^js/Object box (.-entries (.-children boxes))]
       (-> box .-body .-slideFactor (.set 0 0)))
-    (-> ctx .-physics .-add (.collider player boxes))
+    (-> ctx .-physics .-add
+        (.collider player boxes
+                   (fn [collider-1 collider-2]
+                     (let [^js/Object b1 (.-body collider-1)
+                           ^js/Object b2 (.-body collider-2)]
+                       (if (and (-> b1 .-touching .-down)
+                                (-> b2 .-touching .-up))
+                         (do (.setImmovable b2 true)
+                             (set! (.-moves b2) false)
+                             (set! (.-pushable b2) false))
+                         (do (.setImmovable b2 false)
+                             (set! (.-moves b2) true)
+                             (set! (.-pushable b2) true)))))))
     boxes))
 
 (defn create! []
@@ -30,10 +42,10 @@
     (let [player (player/create! this)
           cursors (-> this .-input .-keyboard (.createCursorKeys))
           level (-> this .-make (.tilemap #js {:key "level1"}))
-          tileset (.addTilesetImage level "monochrome" "monochrome-sheet")
-          ; pushables (set-pushables! this player level)
+          tileset (.addTilesetImage level "monochrome" "monochrome-ss")
+          pushables (set-pushables! this player level)
           _ground (set-ground! this player level tileset)]
-      ; (-> this .-physics .-add (.collider pushables _ground))
+      (-> this .-physics .-add (.collider pushables _ground))
       (oassoc! this :player player)
       (oassoc! this :cursors cursors)
       (oassoc! this :level level))))

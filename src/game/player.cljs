@@ -112,6 +112,7 @@
   (when-not (and (blob? player)
                  (collides-above? player level))
     (oupdate! player :blob not)
+    (.setVelocity (.-body player) 0 -150)
     (if (blob? player)
       (resize-player player 32 16)
       (resize-player player 32 32))))

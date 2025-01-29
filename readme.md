@@ -34,9 +34,9 @@ npx http-server resources/public -g
     - [x] Resize body (physics)
     - [x] Don't let player change forms if inside tunel
 - [ ] **Push boxes**
-    - [ ] Don't let player change forms if above pushable
-    - [ ] Find pushable object sprite in tiled spritesheet
-    - [ ] Fix jumping? when over pushable
+    - [x] Let player change forms if above pushable
+    - [x] Fix jumping? when over pushable
+    - [x] Find pushable object sprite in tiled spritesheet
     - [ ] Play animation
 - [ ] **Attack destructibles**
     - [ ] Play animation

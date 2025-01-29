@@ -6,7 +6,7 @@
       (.aseprite "hero" "assets/sprites/hero.png" "assets/sprites/hero.json"))
 
     (-> this .-load
-      (.image "monochrome-sheet" "assets/monochrome_tilemap_packed.png"))
+      (.spritesheet "monochrome-ss" "assets/monochrome_tilemap_packed.png" #js {:frameWidth 16 :frameHeight 16}))
 
     (-> this .-load
       (.on "complete"
