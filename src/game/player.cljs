@@ -3,7 +3,7 @@
    ["phaser" :refer [Input]]
    [game.interop :refer [oassoc! oget oupdate!]]))
 
-(def suffixes ["head" "arms" "torso" "sword" "legs" "boots"])
+(def all-suffixes ["head" "arms" "torso" "sword" "legs" "boots" "slash"])
 
 (defn- create-animation!
   [^js/Object ctx {:keys [source key-name start end frame-rate repeat]}]
@@ -17,12 +17,15 @@
                                      :frameRate frame-rate
                                      :repeat repeat}))))
 
+(defn- get-state-sufixes [state]
+  (let [base-suffixes (remove #(= "slash" %) all-suffixes)]
+    (case state
+      "blob" ["torso"]
+      "attack" all-suffixes
+      base-suffixes)))
+
 (defn- get-key-maps [state]
-  (let [default-suffixes suffixes
-        sufixes (case state
-                  "blob" ["torso"]
-                  "attack" (merge default-suffixes "slash")
-                  default-suffixes)]
+  (let [sufixes (get-state-sufixes state)]
     (map (fn [sufix]
            {:sufix sufix :state state :key-name (str state "-" sufix)}) sufixes)))
 
@@ -50,12 +53,12 @@
 
 (defn- flip-x-container-sprites!
   [^js/Object container ^js/String flip?]
-  (doseq [sufix suffixes]
+  (doseq [sufix all-suffixes]
     (oassoc! (.getByName container sufix) :flipX flip?)))
 
 (defn- create-all-animations! [^js/Object ctx]
   (create-animations! ctx "attack"
-                      {:source "hero" :start 0 :end 3 :frame-rate 8 :repeat -1})
+                      {:source "hero" :start 0 :end 5 :frame-rate 8 :repeat -1})
   (create-animations! ctx "blob"
                       {:source "hero" :start 0 :end 0 :frame-rate 1 :repeat -1})
   (create-animations! ctx "idle"
@@ -79,11 +82,18 @@
         slash (create-sprite! ctx 0 0 "hero" "blob-empty-0" "slash")
         legs (create-sprite! ctx 0 0 "hero" "blob-empty-0" "legs")
         boots (create-sprite! ctx 0 0 "hero" "blob-empty-0" "boots")
-        container (doto (-> ctx .-add (.container 200 150 #js [head arms torso sword slash legs boots]))
+        attack-area (doto (-> ctx .-add (.container 0 0 #js []))
+                      (.setName "attack-area")
+                      (.setSize 32 32))
+        container (doto (-> ctx .-add (.container 200 150 #js [head arms torso sword slash legs boots attack-area]))
                     (.setName "player")
                     (.setSize 16 32))]
 
     (play-container-animations! container "idle")
+
+    (-> ctx .-physics .-world (.enable attack-area))
+    (doto (.-body attack-area)
+      (.setAllowGravity false))
 
     (-> ctx .-physics .-world (.enable container))
     (doto (.-body container)
