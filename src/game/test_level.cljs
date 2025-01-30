@@ -46,6 +46,25 @@
                              (set! (.-pushable b2) true)))))))
     boxes))
 
+(defn- set-destructibles
+  [^js/Object ctx ^js/Object player ^js/Object level]
+  (let [player-attack-area (.getByName player "attack-area")
+        objects (-> ctx .-physics .-add (.group #js {}))
+        destructibles (.createFromObjects level "destructibles")]
+    (.addMultiple objects destructibles)
+    (doseq [^js/Object object (.-entries (.-children objects))]
+      (let [obj-body (.-body object)]
+        (.setImmovable obj-body true)
+        (set! (.-moves obj-body) false)
+        (set! (.-pushable obj-body) false)
+        (.-slideFactor obj-body (.set 0 0))))
+    (-> ctx .-physics .-add
+        (.overlap player-attack-area objects
+                  (fn [_collider-1 collider-2]
+                    (prn :obj-in-attack-range)
+                    (js/console.log collider-2))))
+    objects))
+
 (defn create! []
   (this-as ^js/Object this
     (let [player (player/create! this)
@@ -53,8 +72,10 @@
           level (-> this .-make (.tilemap #js {:key "level1"}))
           tileset (.addTilesetImage level "monochrome" "monochrome-ss")
           pushables (set-pushables! this player level)
-          _ground (set-ground! this player level tileset)]
-      (-> this .-physics .-add (.collider pushables _ground))
+          destructibles (set-destructibles this player level)
+          ground (set-ground! this player level tileset)]
+      (-> this .-physics .-add (.collider pushables ground))
+      (-> this .-physics .-add (.collider destructibles ground))
       (oassoc! this :player player)
       (oassoc! this :cursors cursors)
       (oassoc! this :level level))))
