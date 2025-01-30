@@ -81,7 +81,7 @@
         boots (create-sprite! ctx 0 0 "hero" "blob-empty-0" "boots")
         container (doto (-> ctx .-add (.container 200 150 #js [head arms torso sword slash legs boots]))
                     (.setName "player")
-                    (.setSize 32 32))]
+                    (.setSize 16 32))]
 
     (play-container-animations! container "idle")
 
@@ -114,13 +114,20 @@
     (oupdate! player :blob not)
     (.setVelocity (.-body player) 0 -150)
     (if (blob? player)
-      (resize-player player 32 16)
-      (resize-player player 32 32))))
+      (resize-player player 16 16)
+      (resize-player player 16 32))))
 
 (defn- on-floor? [^js/Object container]
   (when-let [body (-> container .-body)]
     (or (-> body .-blocked .-down)
         (-> body .-touching .-down))))
+
+(defn- pushing? [^js/Object container]
+  (when-let [body (-> container .-body)]
+    (or (-> body .-blocked .-left)
+        (-> body .-touching .-left)
+        (-> body .-blocked .-right)
+        (-> body .-touching .-right))))
 
 (defn- jumping? [^js/Object player]
   (not (zero? (.-y (.-velocity (.-body player))))))
@@ -129,6 +136,7 @@
   [^js/Object player ^js/String state]
   (cond
     (blob? player) (play-container-animations! player "blob")
+    (pushing? player) (play-container-animations! player "push")
     (jumping? player) (play-container-animations! player "jump")
     :else (play-container-animations! player state)))
 

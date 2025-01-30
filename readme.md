@@ -33,11 +33,11 @@ npx http-server resources/public -g
     - [x] Play animation 
     - [x] Resize body (physics)
     - [x] Don't let player change forms if inside tunel
-- [ ] **Push boxes**
+- [x] **Push boxes**
     - [x] Let player change forms if above pushable
     - [x] Fix jumping? when over pushable
     - [x] Find pushable object sprite in tiled spritesheet
-    - [ ] Play animation
+    - [x] Play animation
 - [ ] **Attack destructibles**
     - [ ] Play animation
     - [ ] Collision + effect

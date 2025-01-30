@@ -23,6 +23,15 @@
     (doseq [^js/Object box (.-entries (.-children boxes))]
       (-> box .-body .-slideFactor (.set 0 0)))
     (-> ctx .-physics .-add
+        (.collider boxes boxes
+                   (fn [collider-1 collider-2]
+                     (let [^js/Object b1 (.-body collider-1)
+                           ^js/Object b2 (.-body collider-2)]
+                       (if (and (-> b1 .-touching)
+                                (-> b2 .-touching))
+                         (set! (.-pushable b2) false)
+                         (set! (.-pushable b2) true))))))
+    (-> ctx .-physics .-add
         (.collider player boxes
                    (fn [collider-1 collider-2]
                      (let [^js/Object b1 (.-body collider-1)
