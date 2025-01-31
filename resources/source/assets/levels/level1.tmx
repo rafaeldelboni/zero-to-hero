@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="50" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="9">
+<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="50" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="11">
  <editorsettings>
   <export target="../../../public/assets/level1.json" format="json"/>
  </editorsettings>
@@ -29,9 +29,12 @@
 </data>
  </layer>
  <objectgroup id="6" name="pushables">
-  <object id="5" gid="72" x="352" y="224" width="16" height="16"/>
   <object id="6" gid="10" x="256" y="272" width="16" height="16"/>
   <object id="7" gid="10" x="48" y="272" width="16" height="16"/>
   <object id="8" gid="10" x="320" y="272" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="7" name="destructibles">
+  <object id="9" gid="72" x="336" y="224" width="16" height="16"/>
+  <object id="10" gid="72" x="128" y="272" width="16" height="16"/>
  </objectgroup>
 </map>

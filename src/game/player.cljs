@@ -58,7 +58,7 @@
 
 (defn- create-all-animations! [^js/Object ctx]
   (create-animations! ctx "attack"
-                      {:source "hero" :start 0 :end 5 :frame-rate 8 :repeat -1})
+                      {:source "hero" :start 0 :end 5 :frame-rate 8 :repeat 0})
   (create-animations! ctx "blob"
                       {:source "hero" :start 0 :end 0 :frame-rate 1 :repeat -1})
   (create-animations! ctx "idle"
@@ -91,6 +91,8 @@
 
     (play-container-animations! container "idle")
 
+    (.setDepth container 1)
+
     (-> ctx .-physics .-world (.enable attack-area))
     (doto (.-body attack-area)
       (.setAllowGravity false))
@@ -100,6 +102,11 @@
       (.setBounce 0.0))
 
     (oassoc! container :blob false)
+    (oassoc! container :attack false)
+
+    (.on (.getByName container "slash")
+         "animationcomplete-attack-slash"
+         (fn [] (oassoc! container :attack false)))
 
     container))
 
@@ -142,6 +149,9 @@
 (defn- jumping? [^js/Object player]
   (not (zero? (.-y (.-velocity (.-body player))))))
 
+(defn- attacking? [^js/Object player]
+  (oget player :attack))
+
 (defn- play!
   [^js/Object player ^js/String state]
   (cond
@@ -157,6 +167,10 @@
 (defn- jump [^js/Object player velocity]
   (.setVelocityY (.-body player) (* velocity -1))
   (play! player "jump"))
+
+(defn- attack [^js/Object player]
+  (oassoc! player :attack true)
+  (play! player "attack"))
 
 (defn- move [^js/Object player direction velocity]
   (let [body ^js/Object (.-body player)]
@@ -177,14 +191,18 @@
   (let [player (oget ctx :player)
         level (oget ctx :level)
         cursors ^js/Object (oget ctx :cursors)]
-    (cond
-      (-> cursors .-left .-isDown) (move player :left 150)
-      (-> cursors .-right .-isDown) (move player :right 150)
-      :else (idle player))
+    (when-not (attacking? player)
+      (cond
+        (-> cursors .-left .-isDown) (move player :left 150)
+        (-> cursors .-right .-isDown) (move player :right 150)
+        :else (idle player))
 
-    (when ((-> Input .-Keyboard .-JustDown) (.-down cursors))
-      (toggle-blob player level))
+      (when ((-> Input .-Keyboard .-JustDown) (.-space cursors))
+        (attack player))
 
-    (when (and ((-> Input .-Keyboard .-JustDown) (.-up cursors))
-               (on-floor? player))
-      (jump player 400))))
+      (when ((-> Input .-Keyboard .-JustDown) (.-down cursors))
+        (toggle-blob player level))
+
+      (when (and ((-> Input .-Keyboard .-JustDown) (.-up cursors))
+                 (on-floor? player))
+        (jump player 400)))))

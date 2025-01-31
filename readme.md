@@ -38,9 +38,9 @@ npx http-server resources/public -g
     - [x] Fix jumping? when over pushable
     - [x] Find pushable object sprite in tiled spritesheet
     - [x] Play animation
-- [ ] **Attack destructibles**
-    - [ ] Play animation
-    - [ ] Collision + effect
+- [x] **Attack destructibles**
+    - [x] Play animation
+    - [x] Collision + effect
 - [ ] **Interact with levers**
 - [ ] **Pickups**
 - [ ] **Receive damage**

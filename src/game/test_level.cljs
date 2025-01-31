@@ -1,6 +1,6 @@
 (ns game.test-level
   (:require
-   [game.interop :refer [oassoc!]]
+   [game.interop :refer [oassoc! oget]]
    [game.player :as player]))
 
 (defn preload! []
@@ -18,8 +18,8 @@
 (defn- set-pushables!
   [^js/Object ctx ^js/Object player ^js/Object level]
   (let [boxes (-> ctx .-physics .-add (.group #js {}))
-        push (.createFromObjects level "pushables")]
-    (.addMultiple boxes push)
+        objects (.createFromObjects level "pushables")]
+    (.addMultiple boxes objects)
     (doseq [^js/Object box (.-entries (.-children boxes))]
       (-> box .-body .-slideFactor (.set 0 0)))
     (-> ctx .-physics .-add
@@ -49,21 +49,30 @@
 (defn- set-destructibles
   [^js/Object ctx ^js/Object player ^js/Object level]
   (let [player-attack-area (.getByName player "attack-area")
-        objects (-> ctx .-physics .-add (.group #js {}))
-        destructibles (.createFromObjects level "destructibles")]
-    (.addMultiple objects destructibles)
-    (doseq [^js/Object object (.-entries (.-children objects))]
-      (let [obj-body (.-body object)]
+        destructibles (-> ctx .-physics .-add (.group #js {}))
+        objects (.createFromObjects level "destructibles")]
+    (.addMultiple destructibles objects)
+    (doseq [^js/Object destructible (.-entries (.-children destructibles))]
+      (let [obj-body (.-body destructible)]
         (.setImmovable obj-body true)
         (set! (.-moves obj-body) false)
         (set! (.-pushable obj-body) false)
-        (.-slideFactor obj-body (.set 0 0))))
+        (.set (.-slideFactor obj-body) 0 0)))
+    (-> ctx .-physics .-add (.collider player destructibles))
     (-> ctx .-physics .-add
-        (.overlap player-attack-area objects
-                  (fn [_collider-1 collider-2]
-                    (prn :obj-in-attack-range)
-                    (js/console.log collider-2))))
-    objects))
+        (.overlap player-attack-area destructibles
+                  (fn [^js/Object _collider-1 ^js/Object collider-2]
+                    (let [attacking? (oget player :attack)]
+                      (when attacking?
+                        (-> ctx .-tweens
+                            (.add #js {:targets collider-2
+                                       :alpha 0,
+                                       :duration 300,
+                                       :delay 500
+                                       :ease "bounce.out"
+                                       :onComplete #(.destroy collider-2)})))))))
+
+    destructibles))
 
 (defn create! []
   (this-as ^js/Object this
