@@ -41,7 +41,10 @@ npx http-server resources/public -g
 - [x] **Attack destructibles**
     - [x] Play animation
     - [x] Collision + effect
-- [ ] **Interact with levers**
+- [x] **HUD**
+    - [x] Load custom font
+    - [x] Switch score / hearts
+- [ ] **Camera**
 - [ ] **Pickups**
 - [ ] **Receive damage**
 - [ ] **Consider current form & level to allow/deny actions like jump, push, attack**
@@ -52,3 +55,4 @@ npx http-server resources/public -g
 
 ## Credits
 - https://kenney.nl/assets/1-bit-platformer-pack
+- https://ggbot.itch.io/public-pixel-font

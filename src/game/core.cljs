@@ -1,6 +1,7 @@
 (ns game.core
   (:require
    ["phaser" :refer [AUTO Game Scale]]
+   [game.hud :as hud]
    [game.interop :refer [debug?]]
    [game.preload :as preload]
    [game.test-level :as test-level]))
@@ -23,7 +24,9 @@
                      {:key "test-level"
                       :preload test-level/preload!
                       :create test-level/create!
-                      :update test-level/update!}]})
+                      :update test-level/update!}
+                     {:key "hud"
+                      :create hud/create!}]})
 
 (defn ^:export init []
   (when-let [^js/Object game (:game @state)]
