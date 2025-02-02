@@ -58,7 +58,7 @@
 
 (defn- create-all-animations! [^js/Object ctx]
   (create-animations! ctx "attack"
-                      {:source "hero" :start 0 :end 5 :frame-rate 8 :repeat 0})
+                      {:source "hero" :start 0 :end 5 :frame-rate 10 :repeat 0})
   (create-animations! ctx "blob"
                       {:source "hero" :start 0 :end 0 :frame-rate 1 :repeat -1})
   (create-animations! ctx "idle"
@@ -170,6 +170,7 @@
 
 (defn- attack [^js/Object player]
   (oassoc! player :attack true)
+  (.setVelocityX (.-body player) 0)
   (play! player "attack"))
 
 (defn- move [^js/Object player direction velocity]

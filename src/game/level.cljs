@@ -58,12 +58,16 @@
                   (fn [^js/Object _collider-1 ^js/Object collider-2]
                     (let [attacking? (oget player :attack)]
                       (when attacking?
+                        (.setEnable (.-body collider-2) false)
                         (-> ctx .-tweens
                             (.add #js {:targets collider-2
-                                       :alpha 0,
-                                       :duration 300,
-                                       :delay 500
-                                       :ease "bounce.out"
+                                       :angle #js {:from 0 :to 90}
+                                       :alpha 0
+                                       :scaleX 0
+                                       :scaleY 0
+                                       :duration 400
+                                       :delay 400
+                                       :ease "Linear"
                                        :onComplete #(.destroy collider-2)})))))))
 
     destructibles))
