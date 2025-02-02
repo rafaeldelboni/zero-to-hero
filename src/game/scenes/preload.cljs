@@ -1,4 +1,4 @@
-(ns game.preload)
+(ns game.scenes.preload)
 
 (defn- load-font [name url]
   (let [new-font (new js/FontFace name (str "url(" url ")"))]
@@ -13,10 +13,14 @@
     (load-font "public-pixel" "assets/PublicPixel.ttf")
 
     (-> this .-load
-      (.aseprite "hero" "assets/sprites/hero.png" "assets/sprites/hero.json"))
+      (.aseprite "hero"
+                 "assets/sprites/hero.png"
+                 "assets/sprites/hero.json"))
 
     (-> this .-load
-      (.spritesheet "monochrome-ss" "assets/monochrome_tilemap_packed.png" #js {:frameWidth 16 :frameHeight 16}))
+      (.spritesheet "monochrome-ss"
+                    "assets/monochrome_tilemap_packed.png"
+                    #js {:frameWidth 16 :frameHeight 16}))
 
     (-> this .-load
       (.on "complete"

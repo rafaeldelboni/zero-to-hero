@@ -1,10 +1,10 @@
 (ns game.core
   (:require
    ["phaser" :refer [AUTO Game Scale]]
-   [game.hud :as hud]
    [game.interop :refer [debug?]]
-   [game.preload :as preload]
-   [game.test-level :as test-level]))
+   [game.scenes.hud :as scene.hud]
+   [game.scenes.preload :as scene.preload]
+   [game.scenes.test :as scene.test]))
 
 (defonce state (atom {}))
 
@@ -15,18 +15,19 @@
              :pixelArt true
              :audio {:disableWebAudio true} ;; TODO
              :physics {:default "arcade"
-                       :arcade {:gravity {:y 2000}
+                       :arcade {:fixedStep false
+                                :gravity {:y 2000}
                                 :debug debug?}}
-             :scale {:mode (.-FIT Scale)
-                     :autoCenter (.-CENTER_BOTH Scale)}
+             :scale {:autoCenter (.-CENTER_BOTH Scale)
+                     :mode (.-FIT Scale)}
              :scene [{:key "preload"
-                      :preload preload/preload!}
+                      :preload scene.preload/preload!}
                      {:key "test-level"
-                      :preload test-level/preload!
-                      :create test-level/create!
-                      :update test-level/update!}
+                      :preload scene.test/preload!
+                      :create scene.test/create!
+                      :update scene.test/update!}
                      {:key "hud"
-                      :create hud/create!}]})
+                      :create scene.hud/create!}]})
 
 (defn ^:export init []
   (when-let [^js/Object game (:game @state)]

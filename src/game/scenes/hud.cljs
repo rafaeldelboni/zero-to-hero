@@ -1,4 +1,4 @@
-(ns game.hud
+(ns game.scenes.hud
   (:require
    [game.interop :refer [oassoc! oget]]))
 
@@ -30,7 +30,10 @@
   (this-as ^js/Object this
     (let [screen-width (-> this .-sys .-game .-canvas .-width)
           score-text (-> this .-add
-                         (.text 5 5 "-" #js {:font "8px public-pixel" :fill "#ffffff"}))
+                         (.text 5 5 "-" #js {:font "8px public-pixel"
+                                             :fill "#ffffff"
+                                             :stroke "#000000"
+                                             :strokeThickness 2}))
           heart-indicator-3 (-> this .-add
                                 (.sprite (- screen-width 10) 10 "monochrome-ss" 42))
           heart-indicator-2 (-> this .-add

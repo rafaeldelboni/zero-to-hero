@@ -1,12 +1,6 @@
-(ns game.test-level
+(ns game.level
   (:require
-   [game.interop :refer [oassoc! oget]]
-   [game.player :as player]))
-
-(defn preload! []
-  (this-as ^js/Object this
-    (-> this .-load
-      (.tilemapTiledJSON "level1" "assets/level1.json"))))
+   [game.interop :refer [oget]]))
 
 (defn- set-ground!
   [^js/Object ctx ^js/Object player ^js/Object level ^js/Object tileset]
@@ -74,21 +68,19 @@
 
     destructibles))
 
-(defn create! []
-  (this-as ^js/Object this
-    (let [player (player/create! this)
-          cursors (-> this .-input .-keyboard (.createCursorKeys))
-          level (-> this .-make (.tilemap #js {:key "level1"}))
-          tileset (.addTilesetImage level "monochrome" "monochrome-ss")
-          pushables (set-pushables! this player level)
-          destructibles (set-destructibles this player level)
-          ground (set-ground! this player level tileset)]
-      (-> this .-physics .-add (.collider pushables ground))
-      (-> this .-physics .-add (.collider destructibles ground))
-      (oassoc! this :player player)
-      (oassoc! this :cursors cursors)
-      (oassoc! this :level level))))
+(defn create-tiled-level!
+  [^js/Object ctx ^js/Object player map-key]
+  (let [level (-> ctx .-make (.tilemap #js {:key map-key}))
+        tileset (.addTilesetImage level "monochrome" "monochrome-ss")
+        pushables (set-pushables! ctx player level)
+        destructibles (set-destructibles ctx player level)
+        ground (set-ground! ctx player level tileset)]
+    (-> ctx .-physics .-add (.collider pushables ground))
+    (-> ctx .-physics .-add (.collider destructibles ground))
+    level))
 
-(defn update! []
-  (this-as ^js/Object this
-    (player/update! this)))
+(defn create-camera!
+  [^js/Object ctx ^js/Object player]
+  (-> ctx .-cameras .-main (.setRoundPixels false))
+  (-> ctx .-cameras .-main (.startFollow player false))
+  (-> ctx .-cameras .-main .-followOffset (.set 0 50)))

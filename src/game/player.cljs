@@ -191,18 +191,25 @@
   (let [player (oget ctx :player)
         level (oget ctx :level)
         cursors ^js/Object (oget ctx :cursors)]
-    (when-not (attacking? player)
+
+    (when (not (attacking? player))
       (cond
         (-> cursors .-left .-isDown) (move player :left 150)
         (-> cursors .-right .-isDown) (move player :right 150)
-        :else (idle player))
+        :else (idle player)))
 
-      (when ((-> Input .-Keyboard .-JustDown) (.-space cursors))
-        (attack player))
+    (when (and ((-> Input .-Keyboard .-JustDown) (.-space cursors))
+               (not (attacking? player))
+               (not (pushing? player))
+               (not (jumping? player))
+               (not (blob? player)))
+      (attack player))
 
-      (when ((-> Input .-Keyboard .-JustDown) (.-down cursors))
-        (toggle-blob player level))
+    (when (and ((-> Input .-Keyboard .-JustDown) (.-down cursors))
+               (not (attacking? player)))
+      (toggle-blob player level))
 
-      (when (and ((-> Input .-Keyboard .-JustDown) (.-up cursors))
-                 (on-floor? player))
-        (jump player 400)))))
+    (when (and ((-> Input .-Keyboard .-JustDown) (.-up cursors))
+               (not (attacking? player))
+               (on-floor? player))
+      (jump player 400))))
