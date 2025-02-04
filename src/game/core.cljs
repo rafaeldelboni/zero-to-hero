@@ -21,7 +21,8 @@
              :scale {:autoCenter (.-CENTER_BOTH Scale)
                      :mode (.-FIT Scale)}
              :scene [{:key "preload"
-                      :preload scene.preload/preload!}
+                      :preload scene.preload/preload!
+                      :create scene.preload/create!}
                      {:key "test-level"
                       :preload scene.test/preload!
                       :create scene.test/create!

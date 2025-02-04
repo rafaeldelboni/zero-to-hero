@@ -45,7 +45,7 @@ npx http-server resources/public -g
     - [x] Load custom font
     - [x] Switch score / hearts
 - [x] **Camera**
-- [ ] **Pickups**
+- [x] **Pickups**
 - [ ] **Receive damage**
 - [ ] **Consider current form & level to allow/deny actions like jump, push, attack**
 

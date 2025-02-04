@@ -4,15 +4,18 @@
 
 (def debug? goog.DEBUG)
 
+(defn- keyword->str [k]
+  (if (keyword? k) (str (symbol k)) k))
+
 (defn oassoc! [^js/Object coll k v]
-  (let [prop (if (keyword? k) (name k) k)]
+  (let [prop (keyword->str k)]
     (obj/set coll prop v)))
 
 (defn oget
   ([^js/Object coll k]
    (oget coll k nil))
   ([^js/Object coll k not-found]
-   (let [prop (if (keyword? k) (name k) k)]
+   (let [prop (keyword->str k)]
      (obj/get coll prop not-found))))
 
 (defn oupdate!

@@ -1,4 +1,6 @@
-(ns game.scenes.preload)
+(ns game.scenes.preload
+  (:require
+   [game.interop :refer [oassoc!]]))
 
 (defn- load-font [name url]
   (let [new-font (new js/FontFace name (str "url(" url ")"))]
@@ -25,5 +27,10 @@
     (-> this .-load
       (.on "complete"
            (fn []
-             (-> this .-scene (.start "test-level"))
-             (-> this .-scene (.start "hud")))))))
+             (-> this .-scene (.start "hud"))
+             (-> this .-scene (.start "test-level")))))))
+
+(defn create! []
+  (this-as ^js/Object this
+    (-> this .-registry (.inc "game/health" 3))
+    (-> this .-registry (.inc "game/score" 0))))

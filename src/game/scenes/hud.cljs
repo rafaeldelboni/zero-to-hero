@@ -3,10 +3,10 @@
    [game.interop :refer [oassoc! oget]]))
 
 (defn- update-heart! [ctx]
-  (let [health (oget ctx :health 3)
-        ^js/Object heart-indicator-3 (oget ctx :heart-hud-3)
-        ^js/Object heart-indicator-2 (oget ctx :heart-hud-2)
-        ^js/Object heart-indicator-1 (oget ctx :heart-hud-1)]
+  (let [health (oget ctx :game/health)
+        ^js/Object heart-indicator-3 (oget ctx :hud/heart-icon-3)
+        ^js/Object heart-indicator-2 (oget ctx :hud/heart-icon-2)
+        ^js/Object heart-indicator-1 (oget ctx :hud/heart-icon-1)]
     (case health
       3 (do (.setVisible heart-indicator-3 true)
             (.setVisible heart-indicator-2 false)
@@ -22,9 +22,15 @@
           (.setVisible heart-indicator-1 false)))))
 
 (defn- update-score! [ctx]
-  (let [score (oget ctx :score 0)
-        ^js/Object score-text (oget ctx :score-hud)]
+  (let [score (oget ctx :game/score 0)
+        ^js/Object score-text (oget ctx :hud/score-text)]
     (-> score-text (.setText score))))
+
+(defn- update-via-registry [this _parent k v]
+  (oassoc! this k v)
+  (case k
+    "game/score" (update-score! this)
+    "game/health" (update-heart! this)))
 
 (defn create! []
   (this-as ^js/Object this
@@ -34,16 +40,19 @@
                                              :fill "#ffffff"
                                              :stroke "#000000"
                                              :strokeThickness 2}))
-          heart-indicator-3 (-> this .-add
-                                (.sprite (- screen-width 10) 10 "monochrome-ss" 42))
-          heart-indicator-2 (-> this .-add
-                                (.sprite (- screen-width 10) 10 "monochrome-ss" 41))
-          heart-indicator-1 (-> this .-add
-                                (.sprite (- screen-width 10) 10 "monochrome-ss" 40))]
-      (oassoc! this :score-hud score-text)
-      (oassoc! this :heart-hud-3 heart-indicator-3)
-      (oassoc! this :heart-hud-2 heart-indicator-2)
-      (oassoc! this :heart-hud-1 heart-indicator-1)
+          heart-icon-3 (-> this .-add
+                           (.sprite (- screen-width 10) 10 "monochrome-ss" 42))
+          heart-icon-2 (-> this .-add
+                           (.sprite (- screen-width 10) 10 "monochrome-ss" 41))
+          heart-icon-1 (-> this .-add
+                           (.sprite (- screen-width 10) 10 "monochrome-ss" 40))]
 
-      (update-score! this)
-      (update-heart! this))))
+      (oassoc! this :hud/score-text score-text)
+      (oassoc! this :hud/heart-icon-3 heart-icon-3)
+      (oassoc! this :hud/heart-icon-2 heart-icon-2)
+      (oassoc! this :hud/heart-icon-1 heart-icon-1)
+
+      (-> this .-registry
+          (.each (fn [p k v] (update-via-registry this p k v))))
+      (-> this .-registry .-events
+          (.on "changedata" (partial update-via-registry this) this)))))

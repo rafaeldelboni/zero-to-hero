@@ -15,9 +15,9 @@
           cursors (-> this .-input .-keyboard (.createCursorKeys))
           level (level/create-tiled-level! this player "level1")]
       (level/create-camera! this player)
-      (oassoc! this :player player)
-      (oassoc! this :cursors cursors)
-      (oassoc! this :level level))))
+      (oassoc! this :level/player player)
+      (oassoc! this :level/cursors cursors)
+      (oassoc! this :level/current level))))
 
 (defn update! []
   (this-as ^js/Object this

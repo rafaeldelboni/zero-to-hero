@@ -40,6 +40,29 @@
                              (set! (.-pushable b2) true)))))))
     boxes))
 
+(defn- set-pickables
+  [^js/Object ctx ^js/Object player ^js/Object level]
+  (let [^js/Object pickables (-> ctx .-physics .-add (.group #js {}))
+        ^js/Object objects (.createFromObjects level "pickables")]
+    (.addMultiple pickables objects)
+    (doseq [^js/Object pickup (.-entries (.-children pickables))]
+      (.play pickup "diamond"))
+    (-> ctx .-physics .-add
+        (.overlap player pickables
+                  (fn [^js/Object _collider-1 ^js/Object collider-2]
+                    (-> ctx .-registry (.inc "game/score" 1))
+                    (.setEnable (.-body collider-2) false)
+                    (-> ctx .-tweens
+                        (.add #js {:targets collider-2
+                                   :angle #js {:from 0 :to 360}
+                                   :scaleX 0
+                                   :scaleY 0
+                                   :duration 200
+                                   :delay 50
+                                   :ease "Linear"
+                                   :onComplete #(.destroy collider-2)})))))
+    pickables))
+
 (defn- set-destructibles
   [^js/Object ctx ^js/Object player ^js/Object level]
   (let [player-attack-area (.getByName player "attack-area")
@@ -56,7 +79,7 @@
     (-> ctx .-physics .-add
         (.overlap player-attack-area destructibles
                   (fn [^js/Object _collider-1 ^js/Object collider-2]
-                    (let [attacking? (oget player :attack)]
+                    (let [attacking? (oget player :player/attack)]
                       (when attacking?
                         (.setEnable (.-body collider-2) false)
                         (-> ctx .-tweens
@@ -69,22 +92,34 @@
                                        :delay 400
                                        :ease "Linear"
                                        :onComplete #(.destroy collider-2)})))))))
-
     destructibles))
+
+(defn- create-anims! [^js/Object ctx]
+  (-> ctx .-anims
+      (.create (clj->js {:key "diamond"
+                         :frames (-> ctx .-anims
+                                     (.generateFrameNumbers
+                                      "monochrome-ss"
+                                      (clj->js {:frames [20 21 22 21]})))
+                         :frameRate 5
+                         :repeat -1}))))
 
 (defn create-tiled-level!
   [^js/Object ctx ^js/Object player map-key]
+  (create-anims! ctx)
   (let [level (-> ctx .-make (.tilemap #js {:key map-key}))
         tileset (.addTilesetImage level "monochrome" "monochrome-ss")
         pushables (set-pushables! ctx player level)
         destructibles (set-destructibles ctx player level)
+        pickables (set-pickables ctx player level)
         ground (set-ground! ctx player level tileset)]
     (-> ctx .-physics .-add (.collider pushables ground))
     (-> ctx .-physics .-add (.collider destructibles ground))
+    (-> ctx .-physics .-add (.collider pickables ground))
     level))
 
 (defn create-camera!
   [^js/Object ctx ^js/Object player]
   (-> ctx .-cameras .-main (.setRoundPixels false))
   (-> ctx .-cameras .-main (.startFollow player false))
-  (-> ctx .-cameras .-main .-followOffset (.set 0 50)))
+  (-> ctx .-cameras .-main .-followOffset (.set 0 75)))
