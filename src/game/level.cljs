@@ -1,6 +1,7 @@
 (ns game.level
   (:require
-   [game.interop :refer [oget]]))
+   ["phaser" :refer [Animations]]
+   [game.interop :refer [oassoc! oget]]))
 
 (defn- set-ground!
   [^js/Object ctx ^js/Object player ^js/Object level ^js/Object tileset]
@@ -94,7 +95,43 @@
                                        :onComplete #(.destroy collider-2)})))))))
     destructibles))
 
+(defn- set-threats
+  [^js/Object ctx ^js/Object player ^js/Object level]
+  (let [get-name (fn [t] (-> t .-frame .-name str))
+        hidden-spike "203"
+        active-spike "183"
+        ^js/Object threats (-> ctx .-physics .-add (.group #js {:allowGravity false}))
+        ^js/Object objects (.createFromObjects level "threats")]
+    (.addMultiple threats objects)
+    (doseq [^js/Object threat (.-entries (.-children threats))]
+      (if (= (get-name threat) hidden-spike)
+        (do
+          (.play threat "trap")
+          (oassoc! threat :threat/active false)
+          (-> threat (.on (-> Animations .-Events .-ANIMATION_UPDATE)
+                          (fn []
+                            (condp = (get-name threat)
+                              hidden-spike (oassoc! threat :threat/active false)
+                              active-spike (oassoc! threat :threat/active true)))
+                          threat)))
+        (oassoc! threat :threat/active true)))
+    (-> ctx .-physics .-add
+        (.overlap player threats
+                  (fn [^js/Object collider-1 ^js/Object collider-2]
+                    (when (and (not (oget collider-1 :player/invulnerable))
+                               (oget collider-2 :threat/active))
+                      (-> ctx .-registry (.inc "game/health" -1))))))
+    threats))
+
 (defn- create-anims! [^js/Object ctx]
+  (-> ctx .-anims
+      (.create (clj->js {:key "trap"
+                         :frames (-> ctx .-anims
+                                     (.generateFrameNumbers
+                                      "monochrome-ss"
+                                      (clj->js {:frames [203 183]})))
+                         :frameRate 0.5
+                         :repeat -1})))
   (-> ctx .-anims
       (.create (clj->js {:key "diamond"
                          :frames (-> ctx .-anims
@@ -113,6 +150,7 @@
         destructibles (set-destructibles ctx player level)
         pickables (set-pickables ctx player level)
         ground (set-ground! ctx player level tileset)]
+    (set-threats ctx player level)
     (-> ctx .-physics .-add (.collider pushables ground))
     (-> ctx .-physics .-add (.collider destructibles ground))
     (-> ctx .-physics .-add (.collider pickables ground))

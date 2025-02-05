@@ -37,6 +37,63 @@
         }, 
         {
          "draworder":"topdown",
+         "id":9,
+         "name":"threats",
+         "objects":[
+                {
+                 "gid":204,
+                 "height":16,
+                 "id":14,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":640,
+                 "y":272
+                }, 
+                {
+                 "gid":123,
+                 "height":16,
+                 "id":15,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":688,
+                 "y":272
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":8,
          "name":"pickables",
          "objects":[
@@ -194,8 +251,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":9,
- "nextobjectid":13,
+ "nextlayerid":10,
+ "nextobjectid":16,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.1",
@@ -1320,6 +1377,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -1717,6 +1779,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -1870,6 +1937,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2051,6 +2123,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":0
                         }]
                 }, 
                 {
@@ -2384,6 +2461,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2393,6 +2475,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2402,6 +2489,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2411,6 +2503,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2420,6 +2517,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2429,6 +2531,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2438,6 +2545,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2565,6 +2677,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2574,6 +2691,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2583,6 +2705,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2592,6 +2719,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2601,6 +2733,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2610,6 +2747,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2619,6 +2761,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2745,6 +2892,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2754,6 +2906,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2763,6 +2920,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2772,6 +2934,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2781,6 +2948,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2790,6 +2962,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2799,6 +2976,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2926,6 +3108,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2935,6 +3122,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2944,6 +3136,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2953,6 +3150,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2962,6 +3164,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2971,6 +3178,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -2980,6 +3192,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3106,6 +3323,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3115,6 +3337,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3124,6 +3351,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3133,6 +3365,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3142,6 +3379,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3151,6 +3393,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3160,6 +3407,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3286,6 +3538,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3295,6 +3552,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3304,6 +3566,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3313,6 +3580,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3322,6 +3594,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3331,6 +3608,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3340,6 +3622,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3467,6 +3754,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3476,6 +3768,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3485,6 +3782,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3494,6 +3796,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3503,6 +3810,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3512,6 +3824,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3521,6 +3838,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3647,6 +3969,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3656,6 +3983,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3665,6 +3997,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3674,6 +4011,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3683,6 +4025,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3692,6 +4039,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -3701,6 +4053,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"damage",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {

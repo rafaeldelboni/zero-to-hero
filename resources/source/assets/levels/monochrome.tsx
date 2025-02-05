@@ -614,6 +614,7 @@
  <tile id="122">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="123">
@@ -834,6 +835,7 @@
  <tile id="166">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="167">
@@ -919,6 +921,7 @@
  <tile id="183">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="184">
@@ -1019,6 +1022,7 @@
  <tile id="203">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="204">
@@ -1204,36 +1208,43 @@
  <tile id="240">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="241">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="242">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="243">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="244">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="245">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="246">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="247">
@@ -1304,36 +1315,43 @@
  <tile id="260">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="261">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="262">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="263">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="264">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="265">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="266">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="267">
@@ -1404,36 +1422,43 @@
  <tile id="280">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="281">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="282">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="283">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="284">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="285">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="286">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="287">
@@ -1504,36 +1529,43 @@
  <tile id="300">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="301">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="302">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="303">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="304">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="305">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="306">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="307">
@@ -1604,36 +1636,43 @@
  <tile id="320">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="321">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="322">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="323">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="324">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="325">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="326">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="327">
@@ -1704,36 +1743,43 @@
  <tile id="340">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="341">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="342">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="343">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="344">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="345">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="346">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="347">
@@ -1804,36 +1850,43 @@
  <tile id="360">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="361">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="362">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="363">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="364">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="365">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="366">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="367">
@@ -1904,36 +1957,43 @@
  <tile id="380">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="381">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="382">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="383">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="384">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="385">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="386">
   <properties>
    <property name="collides" type="bool" value="false"/>
+   <property name="damage" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="387">

@@ -1,6 +1,4 @@
-(ns game.scenes.preload
-  (:require
-   [game.interop :refer [oassoc!]]))
+(ns game.scenes.preload)
 
 (defn- load-font [name url]
   (let [new-font (new js/FontFace name (str "url(" url ")"))]

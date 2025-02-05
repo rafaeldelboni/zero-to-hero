@@ -46,8 +46,9 @@ npx http-server resources/public -g
     - [x] Switch score / hearts
 - [x] **Camera**
 - [x] **Pickups**
-- [ ] **Receive damage**
+- [x] **Receive damage**
 - [ ] **Consider current form & level to allow/deny actions like jump, push, attack**
+- [ ] **Menus** Inital scene, pause scene, game over scene
 
 ## Tools
 - [aseprite](https://www.aseprite.org/)

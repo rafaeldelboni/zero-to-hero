@@ -4,6 +4,25 @@
    [game.player.animations :as player.anims]
    [game.interop :refer [oassoc! oget oupdate!]]))
 
+(defn- update-via-registry
+  [^js/Object ctx
+   ^js/Object player
+   _p k v]
+  (when (and (= k "game/health") (<= v 0))
+    ;; TODO move to game over scene
+    (-> ctx .-registry (.set "game/health" 3))
+    (-> ctx .-scene (.start "test-level")))
+  (when (and (= k "game/health") (> v 0) (< v 3))
+    (oassoc! player k v)
+    (oassoc! player :player/invulnerable true)
+    (-> ctx .-tweens
+        (.add #js {:targets player
+                   :alpha 0.35
+                   :yoyo true
+                   :duration 1000
+                   :ease "Bounce"
+                   :onComplete #(oassoc! player :player/invulnerable false)}))))
+
 (defn- create-container! [^js/Object ctx]
   (let [head (player.anims/create-sprite! ctx 0 0 "hero" "blob-empty-0" "head")
         arms (player.anims/create-sprite! ctx 0 0 "hero" "blob-empty-0" "arms")
@@ -33,9 +52,15 @@
          "animationcomplete-attack-slash"
          (fn [] (oassoc! container :player/attack false)))
 
+    (oassoc! container :player/invulnerable false)
     (oassoc! container :player/blob false)
     (oassoc! container :player/attack false)
     (player.anims/play-container-animations! container "idle")
+
+    (-> ctx .-registry
+        (.each (fn [p k v] (update-via-registry ctx container p k v))))
+    (-> ctx .-registry .-events
+        (.on "changedata" (partial update-via-registry ctx container) ctx))
 
     container))
 
