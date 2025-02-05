@@ -41,14 +41,22 @@ npx http-server resources/public -g
 - [x] **Attack destructibles**
     - [x] Play animation
     - [x] Collision + effect
-- [x] **HUD**
+- [ ] **HUD**
     - [x] Load custom font
     - [x] Switch score / hearts
+    - [ ] Show Life / Coins as numbers
 - [x] **Camera**
-- [x] **Pickups**
-- [x] **Receive damage**
+- [ ] **Pickups**
+    - [x] Coins
+    - [ ] Health 
+- [ ] **Health**
+    - [x] Receive damage
+    - [ ] Restore health 
 - [ ] **Consider current form & level to allow/deny actions like jump, push, attack**
-- [ ] **Menus** Inital scene, pause scene, game over scene
+- [ ] **Menus**
+    - [ ] Inital scene
+    - [ ] Pause scene
+    - [ ] Game over scene
 
 ## Tools
 - [aseprite](https://www.aseprite.org/)
