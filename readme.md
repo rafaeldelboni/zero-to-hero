@@ -46,13 +46,19 @@ npx http-server resources/public -g
     - [x] Switch score / hearts
     - [x] Show Life / Coins as numbers
 - [x] **Camera**
-- [x] **Pickups**
+- [ ] **Pickups**
     - [x] Coins
-    - [x] Health 
+    - [x] Health
+    - [ ] Level Orb
 - [x] **Health**
     - [x] Receive damage
     - [x] Restore health 
 - [ ] **Consider current form & level to allow/deny actions like jump, push, attack**
+    - [ ] Lvl. 0 - Blob (can walk, jump)
+    - [ ] Lvl. 1 - Legs (can run, jump higher)
+    - [ ] Lvl. 2 - arms (can run, jump higher, push blocks)
+    - [ ] Lvl. 3 - head (can run, jump higher, push blocks, see health pickups)
+    - [ ] Lvl. 4 - sword (can run, jump higher, push blocks, see health pickups, destroy blocks)
 - [ ] **Menus**
     - [ ] Inital scene
     - [ ] Pause scene
