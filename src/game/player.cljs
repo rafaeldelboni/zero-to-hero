@@ -7,21 +7,26 @@
 (defn- update-via-registry
   [^js/Object ctx
    ^js/Object player
-   _p k v]
-  (when (and (= k "game/health") (<= v 0))
-    ;; TODO move to game over scene
-    (-> ctx .-registry (.set "game/health" 3))
-    (-> ctx .-scene (.start "test-level")))
-  (when (and (= k "game/health") (> v 0) (< v 3))
-    (oassoc! player k v)
-    (oassoc! player :player/invulnerable true)
-    (-> ctx .-tweens
-        (.add #js {:targets player
-                   :alpha 0.35
-                   :yoyo true
-                   :duration 1000
-                   :ease "Bounce"
-                   :onComplete #(oassoc! player :player/invulnerable false)}))))
+   _p updated-key updated-value]
+  (when (= updated-key "game/health")
+    (let [current-health (oget player :game/health)
+          damage? (> current-health updated-value)]
+      (oassoc! player updated-key updated-value)
+
+      (when (<= updated-value 0)
+        ;; TODO move to game over scene
+        (-> ctx .-registry (.set "game/health" 3))
+        (-> ctx .-scene (.start "test-level")))
+
+      (when (and damage? (> updated-value 0) (< updated-value 3))
+        (oassoc! player :player/invulnerable true)
+        (-> ctx .-tweens
+            (.add #js {:targets player
+                       :alpha 0.35
+                       :yoyo true
+                       :duration 1000
+                       :ease "Bounce"
+                       :onComplete #(oassoc! player :player/invulnerable false)}))))))
 
 (defn- create-container! [^js/Object ctx]
   (let [head (player.anims/create-sprite! ctx 0 0 "hero" "blob-empty-0" "head")

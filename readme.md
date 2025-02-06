@@ -41,17 +41,17 @@ npx http-server resources/public -g
 - [x] **Attack destructibles**
     - [x] Play animation
     - [x] Collision + effect
-- [ ] **HUD**
+- [x] **HUD**
     - [x] Load custom font
     - [x] Switch score / hearts
-    - [ ] Show Life / Coins as numbers
+    - [x] Show Life / Coins as numbers
 - [x] **Camera**
-- [ ] **Pickups**
+- [x] **Pickups**
     - [x] Coins
-    - [ ] Health 
-- [ ] **Health**
+    - [x] Health 
+- [x] **Health**
     - [x] Receive damage
-    - [ ] Restore health 
+    - [x] Restore health 
 - [ ] **Consider current form & level to allow/deny actions like jump, push, attack**
 - [ ] **Menus**
     - [ ] Inital scene

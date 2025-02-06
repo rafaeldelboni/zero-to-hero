@@ -3,6 +3,9 @@
    ["phaser" :refer [Animations]]
    [game.interop :refer [oassoc! oget]]))
 
+(defn- sprite->name [^js/Object sprite]
+  (-> sprite .-frame .-name))
+
 (defn- set-ground!
   [^js/Object ctx ^js/Object player ^js/Object level ^js/Object tileset]
   (let [ground (.createLayer level "ground" tileset)]
@@ -43,15 +46,23 @@
 
 (defn- set-pickables
   [^js/Object ctx ^js/Object player ^js/Object level]
-  (let [^js/Object pickables (-> ctx .-physics .-add (.group #js {}))
+  (let [diamond-name 22
+        heart-name 42
+        ^js/Object pickables (-> ctx .-physics .-add (.group #js {}))
         ^js/Object objects (.createFromObjects level "pickables")]
     (.addMultiple pickables objects)
     (doseq [^js/Object pickup (.-entries (.-children pickables))]
-      (.play pickup "diamond"))
+      (condp = (sprite->name pickup)
+        diamond-name (do (.setName pickup "diamond")
+                         (.play pickup "diamond"))
+        heart-name (do (.setName pickup "heart")
+                       (.play pickup "heart"))))
     (-> ctx .-physics .-add
         (.overlap player pickables
                   (fn [^js/Object _collider-1 ^js/Object collider-2]
-                    (-> ctx .-registry (.inc "game/score" 1))
+                    (condp = (.-name collider-2)
+                      "diamond" (-> ctx .-registry (.inc "game/score" 1))
+                      "heart" (-> ctx .-registry (.inc "game/health" 1)))
                     (.setEnable (.-body collider-2) false)
                     (-> ctx .-tweens
                         (.add #js {:targets collider-2
@@ -97,20 +108,19 @@
 
 (defn- set-threats
   [^js/Object ctx ^js/Object player ^js/Object level]
-  (let [get-name (fn [t] (-> t .-frame .-name str))
-        hidden-spike "203"
-        active-spike "183"
+  (let [hidden-spike 203
+        active-spike 183
         ^js/Object threats (-> ctx .-physics .-add (.group #js {:allowGravity false}))
         ^js/Object objects (.createFromObjects level "threats")]
     (.addMultiple threats objects)
     (doseq [^js/Object threat (.-entries (.-children threats))]
-      (if (= (get-name threat) hidden-spike)
+      (if (= (sprite->name threat) hidden-spike)
         (do
           (.play threat "trap")
           (oassoc! threat :threat/active false)
           (-> threat (.on (-> Animations .-Events .-ANIMATION_UPDATE)
                           (fn []
-                            (condp = (get-name threat)
+                            (condp = (sprite->name threat)
                               hidden-spike (oassoc! threat :threat/active false)
                               active-spike (oassoc! threat :threat/active true)))
                           threat)))
@@ -131,6 +141,14 @@
                                       "monochrome-ss"
                                       (clj->js {:frames [203 183]})))
                          :frameRate 0.5
+                         :repeat -1})))
+  (-> ctx .-anims
+      (.create (clj->js {:key "heart"
+                         :frames (-> ctx .-anims
+                                     (.generateFrameNumbers
+                                      "monochrome-ss"
+                                      (clj->js {:frames [40 41 42 41]})))
+                         :frameRate 5
                          :repeat -1})))
   (-> ctx .-anims
       (.create (clj->js {:key "diamond"
