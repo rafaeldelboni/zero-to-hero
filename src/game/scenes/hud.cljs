@@ -1,6 +1,7 @@
 (ns game.scenes.hud
   (:require
-   [game.interop :refer [oassoc! oget]]))
+   [game.interop :refer [oassoc! oget]]
+   [game.phaser.registry :as registry]))
 
 (defn- update-heart! [ctx]
   (let [health (oget ctx :game/health)
@@ -12,11 +13,11 @@
         ^js/Object score-text (oget ctx :hud/score-text)]
     (-> score-text (.setText score))))
 
-(defn- update-via-registry [this _parent k v]
-  (oassoc! this k v)
+(defn- update-via-registry [^js/Object ctx _p k v]
+  (oassoc! ctx k v)
   (case k
-    "game/score" (update-score! this)
-    "game/health" (update-heart! this)
+    :game/score (update-score! ctx)
+    :game/health (update-heart! ctx)
     nil))
 
 (defn create! []
@@ -42,7 +43,4 @@
       (oassoc! this :hud/heart-icon heart-icon)
       (oassoc! this :hud/diamond-icon diamond-icon)
 
-      (-> this .-registry
-          (.each (fn [p k v] (update-via-registry this p k v))))
-      (-> this .-registry .-events
-          (.on "changedata" (partial update-via-registry this) this)))))
+      (registry/on-change! this update-via-registry))))

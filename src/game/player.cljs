@@ -1,27 +1,29 @@
 (ns game.player
   (:require
    ["phaser" :refer [Input]]
-   [game.player.animations :as player.anims]
-   [game.interop :refer [oassoc! oget oupdate!]]))
+   [game.interop :refer [oassoc! oget oupdate!]]
+   [game.phaser.body :as body]
+   [game.phaser.physics :as physics]
+   [game.phaser.registry :as registry]
+   [game.player.animations :as player.anims]))
 
 (defn- update-via-registry
   [^js/Object ctx
    ^js/Object player
    _p updated-key updated-value]
   ; Level up
-  (when (= updated-key "game/level")
+  (when (= updated-key :game/level)
     (oassoc! player :game/level updated-value)
     (prn :game/level (oget player :game/level)))
-
-; Health Change
-  (when (= updated-key "game/health")
+  ; Health Change
+  (when (= updated-key :game/health)
     (let [current-health (oget player :game/health)
           damage? (> current-health updated-value)]
       (oassoc! player :game/health updated-value)
 
       (when (<= updated-value 0)
         ;; TODO move to game over scene
-        (-> ctx .-registry (.set "game/health" 3))
+        (registry/set! ctx :game/health 3)
         (-> ctx .-scene (.start "test-level")))
 
       (when (and damage? (> updated-value 0) (< updated-value 3))
@@ -51,13 +53,11 @@
 
     (.setDepth container 1)
 
-    (-> ctx .-physics .-world (.enable attack-area))
-    (doto (.-body attack-area)
-      (.setAllowGravity false))
+    (physics/world-enable! ctx attack-area)
+    (body/set-allow-gravity! (.-body attack-area) false)
 
-    (-> ctx .-physics .-world (.enable container))
-    (doto (.-body container)
-      (.setBounce 0.0))
+    (physics/world-enable! ctx container)
+    (body/set-bounce! (.-body container) 0.0)
 
     (.on (.getByName container "slash")
          "animationcomplete-attack-slash"
@@ -68,10 +68,7 @@
     (oassoc! container :player/attack false)
     (player.anims/play-container-animations! container "idle")
 
-    (-> ctx .-registry
-        (.each (fn [p k v] (update-via-registry ctx container p k v))))
-    (-> ctx .-registry .-events
-        (.on "changedata" (partial update-via-registry ctx container) ctx))
+    (registry/on-change! ctx update-via-registry container)
 
     container))
 
@@ -87,19 +84,19 @@
   (oget player :player/blob))
 
 (defn- on-floor? [^js/Object container]
-  (when-let [body (-> container .-body)]
-    (or (-> body .-blocked .-down)
-        (-> body .-touching .-down))))
+  (when-let [body (.-body container)]
+    (or (body/blocked-down? body)
+        (body/touching-down? body))))
 
 (defn- pushing? [^js/Object container]
-  (when-let [body (-> container .-body)]
-    (or (-> body .-blocked .-left)
-        (-> body .-touching .-left)
-        (-> body .-blocked .-right)
-        (-> body .-touching .-right))))
+  (when-let [body (.-body container)]
+    (or (body/blocked-left? body)
+        (body/touching-left? body)
+        (body/blocked-right? body)
+        (body/touching-right? body))))
 
 (defn- jumping? [^js/Object player]
-  (not (zero? (.-y (.-velocity (.-body player))))))
+  (not (zero? (body/get-velocity-y (.-body player)))))
 
 (defn- attacking? [^js/Object player]
   (oget player :player/attack))
@@ -120,33 +117,33 @@
   (when-not (and (blob? player)
                  (collides-above? player level))
     (oupdate! player :player/blob not)
-    (.setVelocity (.-body player) 0 -150)
+    (body/set-velocity! (.-body player) 0 -150)
     (if (blob? player)
       (resize-player player 16 16)
       (resize-player player 16 32))))
 
 (defn- idle [^js/Object player]
-  (-> player .-body (.setVelocityX 0))
+  (body/set-velocity-x! (.-body player) 0)
   (play! player "idle"))
 
 (defn- jump [^js/Object player velocity]
-  (.setVelocityY (.-body player) (* velocity -1))
+  (body/set-velocity-y! (.-body player) (* velocity -1))
   (play! player "jump"))
 
 (defn- attack [^js/Object player]
   (oassoc! player :player/attack true)
-  (.setVelocityX (.-body player) 0)
+  (body/set-velocity-x! (.-body player) 0)
   (play! player "attack"))
 
 (defn- move [^js/Object player direction velocity]
   (let [body ^js/Object (.-body player)]
     (case direction
-      :left (do (.setVelocityX body (* velocity -1))
+      :left (do (body/set-velocity-x! body (* velocity -1))
                 (player.anims/flip-x-container-sprites! player true))
-      :right (do (.setVelocityX body velocity)
+      :right (do (body/set-velocity-x! body velocity)
                  (player.anims/flip-x-container-sprites! player false))
-      :up (.setVelocityY body (* velocity -1))
-      :down (.setVelocityY body velocity)))
+      :up (body/set-velocity-y! body (* velocity -1))
+      :down (body/set-velocity-y! body velocity)))
   (play! player "walk"))
 
 (defn create! [^js/Object ctx]

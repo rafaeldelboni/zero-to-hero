@@ -1,20 +1,20 @@
 (ns game.player.animations
   (:require
-   [game.interop :refer [oassoc! oget]]))
+   [game.interop :refer [oassoc! oget]]
+   [game.phaser.anims :as anims]))
 
 (def all-suffixes ["head" "arms" "torso" "sword" "legs" "boots" "slash"])
 
 (defn- create-animation!
   [^js/Object ctx {:keys [source key-name start end frame-rate repeat]}]
-  (-> ctx .-anims (.create (clj->js {:key key-name
-                                     :frames (-> ctx .-anims
-                                                 (.generateFrameNames
-                                                  source
-                                                  #js {:prefix (str key-name "-")
-                                                       :start start
-                                                       :end end}))
-                                     :frameRate frame-rate
-                                     :repeat repeat}))))
+  (anims/create! ctx
+                 {:key key-name
+                  :frames (anims/generate-frame-names
+                           ctx source {:prefix (str key-name "-")
+                                       :start start
+                                       :end end})
+                  :frameRate frame-rate
+                  :repeat repeat}))
 
 (defn- get-state-sufixes [state]
   (let [base-suffixes (remove #(= "slash" %) all-suffixes)]

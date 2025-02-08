@@ -4,8 +4,11 @@
 
 (def debug? goog.DEBUG)
 
-(defn- keyword->str [k]
+(defn keyword->str [k]
   (if (keyword? k) (str (symbol k)) k))
+
+(defn str->keyword [k]
+  (if (string? k) (keyword k) k))
 
 (defn oassoc! [^js/Object coll k v]
   (let [prop (keyword->str k)]
