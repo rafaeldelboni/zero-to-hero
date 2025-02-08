@@ -8,10 +8,16 @@
   [^js/Object ctx
    ^js/Object player
    _p updated-key updated-value]
+  ; Level up
+  (when (= updated-key "game/level")
+    (oassoc! player :game/level updated-value)
+    (prn :game/level (oget player :game/level)))
+
+; Health Change
   (when (= updated-key "game/health")
     (let [current-health (oget player :game/health)
           damage? (> current-health updated-value)]
-      (oassoc! player updated-key updated-value)
+      (oassoc! player :game/health updated-value)
 
       (when (<= updated-value 0)
         ;; TODO move to game over scene

@@ -1,4 +1,4 @@
-{:source-paths ["src" "dev"]
+{:source-paths ["src" "dev" "resources"]
  :dependencies []
  :dev-http {5000 ["resources/public"]}
  :builds {:game {:target     :browser

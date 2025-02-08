@@ -46,10 +46,10 @@ npx http-server resources/public -g
     - [x] Switch score / hearts
     - [x] Show Life / Coins as numbers
 - [x] **Camera**
-- [ ] **Pickups**
+- [x] **Pickups**
     - [x] Coins
     - [x] Health
-    - [ ] Level Orb
+    - [x] Level Orb
 - [x] **Health**
     - [x] Receive damage
     - [x] Restore health 

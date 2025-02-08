@@ -46,13 +46,16 @@
 
 (defn- set-pickables
   [^js/Object ctx ^js/Object player ^js/Object level]
-  (let [diamond-name 22
+  (let [orb-name 2
+        diamond-name 22
         heart-name 42
         ^js/Object pickables (-> ctx .-physics .-add (.group #js {}))
         ^js/Object objects (.createFromObjects level "pickables")]
     (.addMultiple pickables objects)
     (doseq [^js/Object pickup (.-entries (.-children pickables))]
       (condp = (sprite->name pickup)
+        orb-name (do (.setName pickup "orb")
+                     (.play pickup "orb"))
         diamond-name (do (.setName pickup "diamond")
                          (.play pickup "diamond"))
         heart-name (do (.setName pickup "heart")
@@ -61,6 +64,7 @@
         (.overlap player pickables
                   (fn [^js/Object _collider-1 ^js/Object collider-2]
                     (condp = (.-name collider-2)
+                      "orb" (-> ctx .-registry (.inc "game/level" 1))
                       "diamond" (-> ctx .-registry (.inc "game/score" 1))
                       "heart" (-> ctx .-registry (.inc "game/health" 1)))
                     (.setEnable (.-body collider-2) false)
@@ -156,6 +160,14 @@
                                      (.generateFrameNumbers
                                       "monochrome-ss"
                                       (clj->js {:frames [20 21 22 21]})))
+                         :frameRate 5
+                         :repeat -1})))
+  (-> ctx .-anims
+      (.create (clj->js {:key "orb"
+                         :frames (-> ctx .-anims
+                                     (.generateFrameNumbers
+                                      "monochrome-ss"
+                                      (clj->js {:frames [1 2 1]})))
                          :frameRate 5
                          :repeat -1}))))
 

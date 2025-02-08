@@ -31,4 +31,5 @@
 (defn create! []
   (this-as ^js/Object this
     (-> this .-registry (.inc "game/health" 3))
-    (-> this .-registry (.inc "game/score" 0))))
+    (-> this .-registry (.inc "game/score" 0))
+    (-> this .-registry (.inc "game/level" 0))))

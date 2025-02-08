@@ -16,7 +16,8 @@
   (oassoc! this k v)
   (case k
     "game/score" (update-score! this)
-    "game/health" (update-heart! this)))
+    "game/health" (update-heart! this)
+    nil))
 
 (defn create! []
   (this-as ^js/Object this
