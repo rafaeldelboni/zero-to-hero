@@ -5,6 +5,15 @@
 
 (def all-suffixes ["head" "arms" "torso" "sword" "legs" "boots" "slash"])
 
+(defn level-suffixes [level]
+  (cond
+    (= level 0) ["torso"]
+    (= level 1) ["torso" "legs"]
+    (= level 2) ["torso" "legs" "arms"]
+    (= level 3) ["torso" "legs" "arms" "head"]
+    (= level 4) ["torso" "legs" "arms" "head" "sword" "slash"]
+    :else all-suffixes))
+
 (defn- create-animation!
   [^js/Object ctx {:keys [source key-name start end frame-rate repeat]}]
   (anims/create! ctx
@@ -23,10 +32,16 @@
       "attack" all-suffixes
       base-suffixes)))
 
+(defn- sufixes->key-maps [state sufixes]
+  (map (fn [sufix]
+         {:sufix sufix :state state :key-name (str state "-" sufix)})
+       sufixes))
+
 (defn- get-key-maps [state]
-  (let [sufixes (get-state-sufixes state)]
-    (map (fn [sufix]
-           {:sufix sufix :state state :key-name (str state "-" sufix)}) sufixes)))
+  (sufixes->key-maps state (get-state-sufixes state)))
+
+(defn- get-key-maps-by-level [state level]
+  (sufixes->key-maps state (level-suffixes level)))
 
 (defn- create-animations!
   [^js/Object ctx state animation-config]
@@ -35,11 +50,11 @@
       (create-animation! ctx (assoc animation-config :key-name key-name)))))
 
 (defn play-container-animations!
-  [^js/Object container ^js/String state]
+  [^js/Object container ^js/String state level]
   (let [prev-state (oget container :player/prev-state)]
     (when (not= prev-state state)
       (let [prev-key-maps (get-key-maps prev-state)
-            key-maps (get-key-maps state)]
+            key-maps (get-key-maps-by-level state level)]
         (doseq [{:keys [sufix key-name]} prev-key-maps
                 :let [sprite (.getByName container sufix)]]
           (.setVisible sprite false)

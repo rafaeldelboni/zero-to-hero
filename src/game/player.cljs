@@ -66,7 +66,7 @@
     (oassoc! container :player/blob true)
     (oassoc! container :player/attack false)
     (oassoc! container :player/invulnerable false)
-    (player.anims/play-container-animations! container "idle")
+    (player.anims/play-container-animations! container "idle" 0)
 
     (registry/on-change! ctx update-via-registry container)
 
@@ -103,11 +103,12 @@
 
 (defn- play!
   [^js/Object player ^js/String state]
-  (cond
-    (blob? player) (player.anims/play-container-animations! player "blob")
-    (pushing? player) (player.anims/play-container-animations! player "push")
-    (jumping? player) (player.anims/play-container-animations! player "jump")
-    :else (player.anims/play-container-animations! player state)))
+  (let [level (oget player :game/level)]
+    (cond
+      (blob? player) (player.anims/play-container-animations! player "blob" level)
+      (pushing? player) (player.anims/play-container-animations! player "push" level)
+      (jumping? player) (player.anims/play-container-animations! player "jump" level)
+      :else (player.anims/play-container-animations! player state level))))
 
 (defn- resize-player [^js/Object player w h]
   (.setSize player w h)
