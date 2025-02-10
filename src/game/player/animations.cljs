@@ -67,7 +67,7 @@
   (create-animations! ctx "push"
                       {:source "hero" :start 0 :end 3 :frame-rate 8 :repeat -1})
   (create-animations! ctx "walk"
-                      {:source "hero" :start 0 :end 3 :frame-rate 8 :repeat -1}))
+                      {:source "hero" :start 0 :end 3 :frame-rate 10 :repeat -1}))
 
 (defn create-sprite! [^js/Object ctx x y source initial-sprite sprite-name]
   (doto (-> ctx .-add (.sprite x y source initial-sprite))

@@ -52,9 +52,15 @@ npx http-server resources/public -g
     - [x] Level Orb
 - [x] **Health**
     - [x] Receive damage
-    - [x] Restore health 
-- [ ] **Consider current form & level to allow/deny actions like jump, push, attack**
-    - [ ] Lvl. 0 - Blob (can walk, jump)
+    - [x] Restore health
+- [x] **Consider current form & level to allow/deny actions like jump, push, attack**
+    - [x] Lvl. 0 - Blob (can walk, jump)
+    - [x] Lvl. 1 - Legs (can run, jump higher)
+    - [x] Lvl. 2 - arms (can run, jump higher, push blocks)
+    - [x] Lvl. 3 - head (can run, jump higher, push blocks, see health pickups)
+    - [x] Lvl. 4 - sword (can run, jump higher, push blocks, see health pickups, destroy blocks)
+- [ ] **Consider current form & level to show the right player anim/sprite**
+    - [x] Lvl. 0 - Blob (can walk, jump)
     - [ ] Lvl. 1 - Legs (can run, jump higher)
     - [ ] Lvl. 2 - arms (can run, jump higher, push blocks)
     - [ ] Lvl. 3 - head (can run, jump higher, push blocks, see health pickups)
@@ -63,6 +69,8 @@ npx http-server resources/public -g
     - [ ] Inital scene
     - [ ] Pause scene
     - [ ] Game over scene
+- [ ] **Fixes**
+    - [ ] Adjust spike collider size
 
 ## Tools
 - [aseprite](https://www.aseprite.org/)

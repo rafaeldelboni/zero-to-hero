@@ -274,6 +274,24 @@
                  "width":16,
                  "x":736,
                  "y":96
+                }, 
+                {
+                 "gid":42,
+                 "height":16,
+                 "id":37,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":false
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":544,
+                 "y":160
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -394,7 +412,7 @@
          "y":0
         }],
  "nextlayerid":10,
- "nextobjectid":37,
+ "nextobjectid":38,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.1",

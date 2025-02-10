@@ -15,6 +15,20 @@
   (set! (.-pushable body) v)
   body)
 
+(defn set-static! ^js/Object
+  [^js/Object body]
+  (-> body
+      (set-immovable! true)
+      (set-moves! false)
+      (set-pushable! false)))
+
+(defn set-kinetic! ^js/Object
+  [^js/Object body]
+  (-> body
+      (set-immovable! false)
+      (set-moves! true)
+      (set-pushable! true)))
+
 (defn set-slide-factor! ^js/Object
   [^js/Object body x y]
   (.set (.-slideFactor body) x y)

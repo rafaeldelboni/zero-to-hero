@@ -10,6 +10,10 @@
   [^js/Object scene k v]
   (-> scene .-registry (.set (keyword->str k) v)))
 
+(defn get!
+  [^js/Object scene k]
+  (-> scene .-registry (.get (keyword->str k))))
+
 (defn on-change!
   [^js/Object scene
    callback-fn

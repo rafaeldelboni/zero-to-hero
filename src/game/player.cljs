@@ -1,8 +1,8 @@
 (ns game.player
   (:require
-   ["phaser" :refer [Input]]
    [game.interop :refer [oassoc! oget oupdate!]]
    [game.phaser.body :as body]
+   [game.phaser.cursors :as cursors]
    [game.phaser.physics :as physics]
    [game.phaser.registry :as registry]
    [game.player.animations :as player.anims]))
@@ -49,7 +49,7 @@
                       (.setSize 32 32))
         container (doto (-> ctx .-add (.container 200 150 #js [head arms torso sword slash legs boots attack-area]))
                     (.setName "player")
-                    (.setSize 16 32))]
+                    (.setSize 16 16))]
 
     (.setDepth container 1)
 
@@ -63,9 +63,9 @@
          "animationcomplete-attack-slash"
          (fn [] (oassoc! container :player/attack false)))
 
-    (oassoc! container :player/invulnerable false)
-    (oassoc! container :player/blob false)
+    (oassoc! container :player/blob true)
     (oassoc! container :player/attack false)
+    (oassoc! container :player/invulnerable false)
     (player.anims/play-container-animations! container "idle")
 
     (registry/on-change! ctx update-via-registry container)
@@ -146,33 +146,52 @@
       :down (body/set-velocity-y! body velocity)))
   (play! player "walk"))
 
+(defn- level> [^js/Object player level]
+  (> (oget player :game/level) level))
+
+(defn- can-move? [^js/Object player]
+  (not (attacking? player)))
+
+(defn- can-blob? [^js/Object player]
+  (and (level> player 0)
+       (not (attacking? player))))
+
+(defn- can-attack? [^js/Object player]
+  (and (level> player 3)
+       (not (attacking? player))
+       (not (pushing? player))
+       (not (jumping? player))
+       (not (blob? player))))
+
+(defn- can-jump? [^js/Object player]
+  (and (not (attacking? player))
+       (on-floor? player)))
+
 (defn create! [^js/Object ctx]
   (player.anims/create-all-animations! ctx)
   (create-container! ctx))
 
 (defn update! [^js/Object ctx]
-  (let [^js/Object cursors (oget ctx :level/cursors)
+  (let [^js/Object cursor (oget ctx :level/cursors)
         ^js/Object player (oget ctx :level/player)
-        ^js/Object level (oget ctx :level/current)]
+        ^js/Object level (oget ctx :level/current)
+        speed (if (blob? player) 150 200)
+        jump-force (if (blob? player) 400 450)]
 
-    (when (not (attacking? player))
+    (when (can-move? player)
       (cond
-        (-> cursors .-left .-isDown) (move player :left 150)
-        (-> cursors .-right .-isDown) (move player :right 150)
+        (cursors/left-is-pressed? cursor) (move player :left speed)
+        (cursors/right-is-pressed? cursor) (move player :right speed)
         :else (idle player)))
 
-    (when (and ((-> Input .-Keyboard .-JustDown) (.-space cursors))
-               (not (attacking? player))
-               (not (pushing? player))
-               (not (jumping? player))
-               (not (blob? player)))
+    (when (and (cursors/attack-just-pressed? cursor)
+               (can-attack? player))
       (attack player))
 
-    (when (and ((-> Input .-Keyboard .-JustDown) (.-down cursors))
-               (not (attacking? player)))
+    (when (and (cursors/down-just-pressed? cursor)
+               (can-blob? player))
       (toggle-blob player level))
 
-    (when (and ((-> Input .-Keyboard .-JustDown) (.-up cursors))
-               (not (attacking? player))
-               (on-floor? player))
-      (jump player 400))))
+    (when (and (cursors/up-just-pressed? cursor)
+               (can-jump? player))
+      (jump player jump-force))))
