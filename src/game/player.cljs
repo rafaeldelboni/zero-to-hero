@@ -7,6 +7,12 @@
    [game.phaser.registry :as registry]
    [game.player.animations :as player.anims]))
 
+(defn- game-over! [^js/Object ctx]
+  ;; TODO move to game over scene
+  (registry/remove-all-listeners! ctx)
+  (registry/set! ctx :game/health 3)
+  (-> ctx .-scene (.start "preload")))
+
 (defn- update-via-registry
   [^js/Object ctx
    ^js/Object player
@@ -22,9 +28,7 @@
       (oassoc! player :game/health updated-value)
 
       (when (<= updated-value 0)
-        ;; TODO move to game over scene
-        (registry/set! ctx :game/health 3)
-        (-> ctx .-scene (.start "test-level")))
+        (game-over! ctx))
 
       (when (and damage? (> updated-value 0) (< updated-value 3))
         (oassoc! player :player/invulnerable true)
@@ -36,7 +40,7 @@
                        :ease "Bounce"
                        :onComplete #(oassoc! player :player/invulnerable false)}))))))
 
-(defn- create-container! [^js/Object ctx]
+(defn- create-container! [^js/Object ctx x y]
   (let [head (player.anims/create-sprite! ctx 0 0 "hero" "blob-empty-0" "head")
         arms (player.anims/create-sprite! ctx 0 0 "hero" "blob-empty-0" "arms")
         torso (player.anims/create-sprite! ctx 0 0 "hero" "blob-empty-0" "torso")
@@ -47,7 +51,7 @@
         attack-area (doto (-> ctx .-add (.container 0 0 #js []))
                       (.setName "attack-area")
                       (.setSize 32 32))
-        container (doto (-> ctx .-add (.container 200 150 #js [head arms torso sword slash legs boots attack-area]))
+        container (doto (-> ctx .-add (.container x y #js [head arms torso sword slash legs boots attack-area]))
                     (.setName "player")
                     (.setSize 16 16))]
 
@@ -66,7 +70,7 @@
     (oassoc! container :player/blob true)
     (oassoc! container :player/attack false)
     (oassoc! container :player/invulnerable false)
-    (player.anims/play-container-animations! container "idle")
+    (player.anims/play-container-animations! container "idle" 0)
 
     (registry/on-change! ctx update-via-registry container)
 
@@ -103,11 +107,12 @@
 
 (defn- play!
   [^js/Object player ^js/String state]
-  (cond
-    (blob? player) (player.anims/play-container-animations! player "blob")
-    (pushing? player) (player.anims/play-container-animations! player "push")
-    (jumping? player) (player.anims/play-container-animations! player "jump")
-    :else (player.anims/play-container-animations! player state)))
+  (let [level (oget player :game/level)]
+    (cond
+      (blob? player) (player.anims/play-container-animations! player "blob" level)
+      (pushing? player) (player.anims/play-container-animations! player "push" level)
+      (jumping? player) (player.anims/play-container-animations! player "jump" level)
+      :else (player.anims/play-container-animations! player state level))))
 
 (defn- resize-player [^js/Object player w h]
   (.setSize player w h)
@@ -167,9 +172,9 @@
   (and (not (attacking? player))
        (on-floor? player)))
 
-(defn create! [^js/Object ctx]
+(defn create! [^js/Object ctx x y]
   (player.anims/create-all-animations! ctx)
-  (create-container! ctx))
+  (create-container! ctx x y))
 
 (defn update! [^js/Object ctx]
   (let [^js/Object cursor (oget ctx :level/cursors)

@@ -1,5 +1,15 @@
 (ns game.phaser.body)
 
+(defn set-size! ^js/Object
+  [^js/Object body x y]
+  (.setSize body x y)
+  body)
+
+(defn set-offset! ^js/Object
+  [^js/Object body x y]
+  (.setOffset body x y)
+  body)
+
 (defn set-immovable! ^js/Object
   [^js/Object body v]
   (.setImmovable body v)

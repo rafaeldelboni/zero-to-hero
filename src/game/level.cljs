@@ -14,10 +14,11 @@
   ([^js/Object ctx ^js/Object level layer-name]
    (level-objects->group! ctx level layer-name {}))
   ([^js/Object ctx ^js/Object level layer-name group-opts]
-   (let [^js/Object boxes (physics/add-group! ctx group-opts)
+   (let [^js/Object group (physics/add-group! ctx group-opts)
          ^js/Object objects (.createFromObjects level layer-name)]
-     (.addMultiple boxes objects)
-     boxes)))
+     (.addMultiple group objects)
+     (.setName group layer-name)
+     group)))
 
 (defn- set-ground!
   [^js/Object ctx ^js/Object player ^js/Object level ^js/Object tileset]
@@ -137,6 +138,9 @@
         ^js/Object threats (level-objects->group!
                             ctx level "threats" {:allowGravity false})]
     (doseq [^js/Object threat (.-entries (.-children threats))]
+      (-> (.-body threat)
+          (body/set-size! 16 8)
+          (body/set-offset! 0 8))
       (if (= (sprite->frame-name threat) hidden-spike)
         (do
           (.play threat "trap")
@@ -188,6 +192,7 @@
     (physics/add-collider! ctx pushables ground)
     (physics/add-collider! ctx destructibles ground)
     (physics/add-collider! ctx pickables ground)
+    (oassoc! ctx :level/pickables pickables)
     level))
 
 (defn create-camera!
