@@ -14,6 +14,9 @@
   [^js/Object scene k]
   (-> scene .-registry (.get (keyword->str k))))
 
+(defn remove-all-listeners! [^js/Object scene]
+  (-> scene .-registry .-events .removeAllListeners))
+
 (defn on-change!
   [^js/Object scene
    callback-fn

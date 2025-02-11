@@ -25,12 +25,16 @@
                   :frameRate frame-rate
                   :repeat repeat}))
 
-(defn- get-state-sufixes [state]
-  (let [base-suffixes (remove #(= "slash" %) all-suffixes)]
-    (case state
-      "blob" ["torso"]
-      "attack" all-suffixes
-      base-suffixes)))
+(defn- get-state-sufixes
+  ([state]
+   (get-state-sufixes state nil))
+  ([state level]
+   (let [suffixes (if level (level-suffixes level) all-suffixes)
+         base-suffixes (remove #(= "slash" %) suffixes)]
+     (case state
+       "blob" ["torso"]
+       "attack" all-suffixes
+       base-suffixes))))
 
 (defn- sufixes->key-maps [state sufixes]
   (map (fn [sufix]
@@ -41,7 +45,7 @@
   (sufixes->key-maps state (get-state-sufixes state)))
 
 (defn- get-key-maps-by-level [state level]
-  (sufixes->key-maps state (level-suffixes level)))
+  (sufixes->key-maps state (get-state-sufixes state level)))
 
 (defn- create-animations!
   [^js/Object ctx state animation-config]
@@ -53,7 +57,7 @@
   [^js/Object container ^js/String state level]
   (let [prev-state (oget container :player/prev-state)]
     (when (not= prev-state state)
-      (let [prev-key-maps (get-key-maps prev-state)
+      (let [prev-key-maps (get-key-maps-by-level prev-state level)
             key-maps (get-key-maps-by-level state level)]
         (doseq [{:keys [sufix key-name]} prev-key-maps
                 :let [sprite (.getByName container sufix)]]
