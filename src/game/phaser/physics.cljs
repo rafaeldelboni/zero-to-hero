@@ -9,8 +9,10 @@
 (defn add-collider! ^js/Object
   (^js/Object [^js/Object scene ^js/Object group-1 ^js/Object group-2]
    (-> scene .-physics .-add (.collider group-1 group-2)))
-  (^js/Object [^js/Object scene ^js/Object group-1 ^js/Object group-2 callback-fn]
-   (-> scene .-physics .-add (.collider group-1 group-2 callback-fn))))
+  (^js/Object [^js/Object scene ^js/Object group-1 ^js/Object group-2 collide-callback]
+   (-> scene .-physics .-add (.collider group-1 group-2 collide-callback)))
+  (^js/Object [^js/Object scene ^js/Object group-1 ^js/Object group-2 collide-callback process-callback]
+   (-> scene .-physics .-add (.collider group-1 group-2 collide-callback process-callback))))
 
 (defn add-overlap!
   (^js/Object [^js/Object scene ^js/Object group-1 ^js/Object group-2]

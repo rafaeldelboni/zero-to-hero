@@ -2,7 +2,6 @@
   (:require
    [game.interop :refer [oassoc!]]
    [game.level :as level]
-   [game.phaser.registry :as registry]
    [game.player :as player]))
 
 (defn preload! []
@@ -16,8 +15,6 @@
           cursors (-> this .-input .-keyboard (.createCursorKeys))
           level (level/create-tiled-level! this player "level1")]
       (level/create-camera! this player)
-      (registry/set! this :game/score 0)
-      (registry/set! this :game/level 0)
       (oassoc! this :level/player player)
       (oassoc! this :level/cursors cursors)
       (oassoc! this :level/current level))))

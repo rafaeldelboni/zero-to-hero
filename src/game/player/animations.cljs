@@ -84,7 +84,7 @@
   (create-animations! ctx "jump"
                       {:source "hero" :start 0 :end 1 :frame-rate 4 :repeat -1})
   (create-animations! ctx "push"
-                      {:source "hero" :start 0 :end 3 :frame-rate 8 :repeat -1})
+                      {:source "hero" :start 0 :end 3 :frame-rate 6 :repeat -1})
   (create-animations! ctx "walk"
                       {:source "hero" :start 0 :end 3 :frame-rate 10 :repeat -1}))
 
