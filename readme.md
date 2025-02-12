@@ -65,6 +65,20 @@ npx http-server resources/public -g
     - [x] Lvl. 2 - arms (can run, jump higher, push blocks)
     - [x] Lvl. 3 - head (can run, jump higher, push blocks, see health pickups)
     - [x] Lvl. 4 - sword (can run, jump higher, push blocks, see health pickups, destroy blocks)
+- [ ] **HUD**
+    - [ ] Show information messages based on events
+    - [ ] Hold in screen until key press
+- [ ] **Audio**
+    - [ ] Move
+    - [ ] Jump
+    - [ ] Push
+    - [ ] Attack
+    - [ ] Destroy
+    - [ ] Damage
+    - [ ] Coin
+    - [ ] Health
+    - [ ] Orb
+    - [ ] BG Music 
 - [ ] **Menus**
     - [ ] Inital scene
     - [ ] Pause scene
