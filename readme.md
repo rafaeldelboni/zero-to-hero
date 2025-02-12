@@ -65,9 +65,15 @@ npx http-server resources/public -g
     - [x] Lvl. 2 - arms (can run, jump higher, push blocks)
     - [x] Lvl. 3 - head (can run, jump higher, push blocks, see health pickups)
     - [x] Lvl. 4 - sword (can run, jump higher, push blocks, see health pickups, destroy blocks)
+- [x] **Fixes**
+    - [x] Adjust spike collider size
 - [ ] **HUD**
     - [ ] Show information messages based on events
     - [ ] Hold in screen until key press
+- [ ] **Menus**
+    - [ ] Inital scene
+    - [ ] Pause scene
+    - [ ] Game over scene
 - [ ] **Audio**
     - [ ] Move
     - [ ] Jump
@@ -79,12 +85,6 @@ npx http-server resources/public -g
     - [ ] Health
     - [ ] Orb
     - [ ] BG Music 
-- [ ] **Menus**
-    - [ ] Inital scene
-    - [ ] Pause scene
-    - [ ] Game over scene
-- [x] **Fixes**
-    - [x] Adjust spike collider size
 
 ## Tools
 - [aseprite](https://www.aseprite.org/)
