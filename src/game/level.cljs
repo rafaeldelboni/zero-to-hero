@@ -31,7 +31,9 @@
   [^js/Object ctx ^js/Object player ^js/Object level]
   (let [^js/Object boxes (level-objects->group! ctx level "pushables")]
     (doseq [^js/Object box (.-entries (.-children boxes))]
-      (body/set-slide-factor! (.-body box) 0 0))
+      (-> (.-body box)
+          (body/set-size! 12 16)
+          (body/set-slide-factor! 0 0)))
     (physics/add-collider!
      ctx boxes boxes (fn [collider-1 collider-2]
                        (let [^js/Object b1 (.-body collider-1)
@@ -53,6 +55,18 @@
                             (body/set-static! b2)))))
 
     boxes))
+
+(defn- set-pushable-blocks!
+  [^js/Object ctx ^js/Object pushables ^js/Object level]
+  (let [^js/Object blocks (level-objects->group! ctx level "pushable-blocks")]
+    (physics/add-overlap!
+     ctx blocks pushables (fn [_collider-1 collider-2]
+                            (let [^js/Object b2 (.-body collider-2)]
+                              (if (or (body/touching-right? b2)
+                                      (body/touching-left? b2))
+                                (body/set-static! b2)
+                                (body/set-kinetic! b2)))))
+    blocks))
 
 (defn- pickup!
   [^js/Object ctx ^js/Object target target-keyword]
@@ -185,14 +199,15 @@
   (let [level (-> ctx .-make (.tilemap #js {:key map-key}))
         tileset (.addTilesetImage level "monochrome" "monochrome-ss")
         pushables (set-pushables! ctx player level)
+        pushable-blocks (set-pushable-blocks! ctx pushables level)
         destructibles (set-destructibles ctx player level)
         pickables (set-pickables ctx player level)
         ground (set-ground! ctx player level tileset)]
     (set-threats ctx player level)
     (physics/add-collider! ctx pushables ground)
+    (physics/add-collider! ctx pushable-blocks ground)
     (physics/add-collider! ctx destructibles ground)
     (physics/add-collider! ctx pickables ground)
-    (oassoc! ctx :level/pickables pickables)
     level))
 
 (defn create-camera!

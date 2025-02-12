@@ -7,6 +7,9 @@
    [game.phaser.registry :as registry]
    [game.player.animations :as player.anims]))
 
+(def blob-size {:x 12 :y 16})
+(def human-size {:x 14 :y 32})
+
 (defn- game-over! [^js/Object ctx]
   ;; TODO move to game over scene
   (registry/remove-all-listeners! ctx)
@@ -53,7 +56,7 @@
                       (.setSize 32 32))
         container (doto (-> ctx .-add (.container x y #js [head arms torso sword slash legs boots attack-area]))
                     (.setName "player")
-                    (.setSize 16 16))]
+                    (.setSize (:x blob-size) (:y blob-size)))]
 
     (.setDepth container 1)
 
@@ -83,6 +86,9 @@
     (if tile
       (.-collides (.-properties tile))
       false)))
+
+(defn- invulnerable? [^js/Object player]
+  (oget player :player/invulnerable))
 
 (defn- blob? [^js/Object player]
   (oget player :player/blob))
@@ -124,8 +130,8 @@
     (oupdate! player :player/blob not)
     (body/set-velocity! (.-body player) 0 -150)
     (if (blob? player)
-      (resize-player player 16 16)
-      (resize-player player 16 32))))
+      (resize-player player (:x blob-size) (:y blob-size))
+      (resize-player player (:x human-size) (:y human-size)))))
 
 (defn- idle [^js/Object player]
   (body/set-velocity-x! (.-body player) 0)
@@ -172,6 +178,19 @@
   (and (not (attacking? player))
        (on-floor? player)))
 
+(defn- get-speed [^js/Object player]
+  (cond
+    (invulnerable? player) 50
+    (pushing? player) 50
+    (blob? player) 150
+    :else 200))
+
+(defn- get-jump-force [^js/Object player]
+  (cond
+    (invulnerable? player) 200
+    (blob? player) 400
+    :else 450))
+
 (defn create! [^js/Object ctx x y]
   (player.anims/create-all-animations! ctx)
   (create-container! ctx x y))
@@ -180,8 +199,8 @@
   (let [^js/Object cursor (oget ctx :level/cursors)
         ^js/Object player (oget ctx :level/player)
         ^js/Object level (oget ctx :level/current)
-        speed (if (blob? player) 150 200)
-        jump-force (if (blob? player) 400 450)]
+        speed (get-speed player)
+        jump-force (get-jump-force player)]
 
     (when (can-move? player)
       (cond

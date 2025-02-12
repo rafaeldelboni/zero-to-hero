@@ -59,9 +59,17 @@
   (.setVelocityY body y)
   body)
 
+(defn get-velocity
+  [^js/Object body]
+  (.-velocity body))
+
 (defn get-velocity-y
   [^js/Object body]
   (.-y (.-velocity body)))
+
+(defn get-velocity-x
+  [^js/Object body]
+  (.-x (.-velocity body)))
 
 (defn set-bounce! ^js/Object
   [^js/Object body v]
@@ -92,6 +100,10 @@
 (defn touching-up?
   [^js/Object body]
   (-> body .-touching .-up))
+
+(defn blocked?
+  [^js/Object body]
+  (-> body .-blocked))
 
 (defn blocked-left?
   [^js/Object body]
