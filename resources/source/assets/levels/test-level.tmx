@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="50" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="43">
  <editorsettings>
-  <export target="../../../public/assets/level1.json" format="json"/>
+  <export target="../../../public/assets/test-level.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" source="monochrome.tsx"/>
  <layer id="1" name="ground" width="50" height="20">

@@ -4,7 +4,8 @@
    [game.interop :refer [debug?]]
    [game.scenes.hud :as scene.hud]
    [game.scenes.preload :as scene.preload]
-   [game.scenes.test :as scene.test]))
+   [game.scenes.test :as scene.test]
+   [game.scenes.level1 :as scene.level1]))
 
 (defonce state (atom {}))
 
@@ -27,6 +28,10 @@
                       :preload scene.test/preload!
                       :create scene.test/create!
                       :update scene.test/update!}
+                     {:key "level-1"
+                      :preload scene.level1/preload!
+                      :create scene.level1/create!
+                      :update scene.level1/update!}
                      {:key "hud"
                       :create scene.hud/create!}]})
 

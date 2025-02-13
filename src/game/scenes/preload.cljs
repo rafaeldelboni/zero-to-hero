@@ -28,7 +28,7 @@
       (.on "complete"
            (fn []
              (-> this .-scene (.start "hud"))
-             (-> this .-scene (.start "test-level")))))))
+             (-> this .-scene (.start "level-1")))))))
 
 (defn create! []
   (this-as ^js/Object this

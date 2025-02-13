@@ -13,7 +13,8 @@
   (empty-container! "game"))
 
 ; register asset to hotreload
-(rc/inline "public/assets/level1.json")
+(rc/inline "public/assets/level-1.json")
+(rc/inline "public/assets/test-level.json")
 (rc/inline "public/assets/sprites/hero.json")
 ; init game from this ns
 (init)

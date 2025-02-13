@@ -187,7 +187,6 @@
 
 (defn- get-jump-force [^js/Object player]
   (cond
-    (invulnerable? player) 200
     (blob? player) 400
     :else 450))
 

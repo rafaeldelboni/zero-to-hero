@@ -197,7 +197,11 @@
   [^js/Object ctx ^js/Object player map-key]
   (create-anims! ctx)
   (let [level (-> ctx .-make (.tilemap #js {:key map-key}))
-        tileset (.addTilesetImage level "monochrome" "monochrome-ss")
+        tileset (.addTilesetImage level
+                                  "monochrome"
+                                  "monochrome-ss"
+                                  16 16 0 0 0
+                                  #js {:x 1 :y 1})
         pushables (set-pushables! ctx player level)
         pushable-blocks (set-pushable-blocks! ctx pushables level)
         destructibles (set-destructibles ctx player level)

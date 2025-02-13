@@ -1,4 +1,4 @@
-(ns game.scenes.test
+(ns game.scenes.level1
   (:require
    [game.interop :refer [oassoc!]]
    [game.level :as level]
@@ -7,13 +7,13 @@
 (defn preload! []
   (this-as ^js/Object this
     (-> this .-load
-      (.tilemapTiledJSON "test-level" "assets/test-level.json"))))
+      (.tilemapTiledJSON "level-1" "assets/level-1.json"))))
 
 (defn create! []
   (this-as ^js/Object this
-    (let [player (player/create! this 200 200)
+    (let [player (player/create! this 64 170)
           cursors (-> this .-input .-keyboard (.createCursorKeys))
-          level (level/create-tiled-level! this player "test-level")]
+          level (level/create-tiled-level! this player "level-1")]
       (level/create-camera! this player)
       (oassoc! this :level/player player)
       (oassoc! this :level/cursors cursors)
