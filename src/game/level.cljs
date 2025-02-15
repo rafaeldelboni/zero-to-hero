@@ -32,7 +32,7 @@
   (let [^js/Object boxes (level-objects->group! ctx level "pushables")]
     (doseq [^js/Object box (.-entries (.-children boxes))]
       (-> (.-body box)
-          (body/set-size! 14 16)
+          (body/set-size! 13 16)
           (body/set-slide-factor! 0.1 0.1)
           (body/set-drag! 10 10)))
     (physics/add-collider!
