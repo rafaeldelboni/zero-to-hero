@@ -21,8 +21,8 @@
 
     (-> this .-load
       (.spritesheet "monochrome-ss"
-                    "assets/monochrome_tilemap_packed.png"
-                    #js {:frameWidth 16 :frameHeight 16}))
+                    "assets/monochrome_tilemap_extruded.png"
+                    #js {:frameWidth 16 :frameHeight 16 :margin 1 :spacing 2}))
 
     (-> this .-load
       (.on "complete"

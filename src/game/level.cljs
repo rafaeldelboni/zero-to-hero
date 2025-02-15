@@ -32,16 +32,17 @@
   (let [^js/Object boxes (level-objects->group! ctx level "pushables")]
     (doseq [^js/Object box (.-entries (.-children boxes))]
       (-> (.-body box)
-          (body/set-size! 12 16)
-          (body/set-slide-factor! 0 0)))
+          (body/set-size! 14 16)
+          (body/set-slide-factor! 0.1 0.1)
+          (body/set-drag! 10 10)))
     (physics/add-collider!
      ctx boxes boxes (fn [collider-1 collider-2]
                        (let [^js/Object b1 (.-body collider-1)
                              ^js/Object b2 (.-body collider-2)]
-                         (if (and (body/touching? b1)
-                                  (body/touching? b2))
-                           (body/set-pushable! b2 false)
-                           (body/set-pushable! b2 true)))))
+                         (if (and (body/touching-down? b1)
+                                  (body/touching-up? b2))
+                           (body/set-allow-gravity! b1 false)
+                           (body/set-allow-gravity! b1 true)))))
     (physics/add-collider!
      ctx player boxes (fn [collider-1 collider-2]
                         (let [level (registry/get! ctx :game/level)
@@ -200,14 +201,14 @@
         tileset (.addTilesetImage level
                                   "monochrome"
                                   "monochrome-ss"
-                                  16 16 0 0 0
-                                  #js {:x 1 :y 1})
+                                  16 16 1 2 0
+                                  #js {:x 0 :y 0})
+        ground (set-ground! ctx player level tileset)
+        _threats (set-threats ctx player level)
         pushables (set-pushables! ctx player level)
         pushable-blocks (set-pushable-blocks! ctx pushables level)
         destructibles (set-destructibles ctx player level)
-        pickables (set-pickables ctx player level)
-        ground (set-ground! ctx player level tileset)]
-    (set-threats ctx player level)
+        pickables (set-pickables ctx player level)]
     (physics/add-collider! ctx pushables ground)
     (physics/add-collider! ctx pushable-blocks ground)
     (physics/add-collider! ctx destructibles ground)

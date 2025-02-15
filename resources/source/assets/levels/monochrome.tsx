@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.1" name="monochrome" tilewidth="16" tileheight="16" tilecount="400" columns="20">
- <tileoffset x="1" y="1"/>
- <image source="../../../public/assets/monochrome_tilemap_packed.png" trans="000000" width="320" height="320"/>
+<tileset version="1.10" tiledversion="1.11.2" name="monochrome" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="400" columns="20" objectalignment="bottomleft" tilerendersize="grid">
+ <image source="../../../public/assets/monochrome_tilemap_extruded.png" trans="000000" width="360" height="360"/>
  <tile id="0">
   <properties>
    <property name="collides" type="bool" value="false"/>
@@ -64,7 +63,7 @@
  </tile>
  <tile id="12">
   <properties>
-   <property name="collides" type="bool" value="false"/>
+   <property name="collides" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="13">
@@ -164,7 +163,7 @@
  </tile>
  <tile id="32">
   <properties>
-   <property name="collides" type="bool" value="false"/>
+   <property name="collides" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="33">
@@ -264,7 +263,7 @@
  </tile>
  <tile id="52">
   <properties>
-   <property name="collides" type="bool" value="false"/>
+   <property name="collides" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="53">

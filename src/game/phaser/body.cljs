@@ -44,6 +44,11 @@
   (.set (.-slideFactor body) x y)
   body)
 
+(defn set-drag! ^js/Object
+  [^js/Object body x y]
+  (.setDrag body x y)
+  body)
+
 (defn set-velocity! ^js/Object
   [^js/Object body x y]
   (.setVelocity body x y)
