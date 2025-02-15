@@ -1565,24 +1565,6 @@
                 {
                  "gid":50,
                  "height":16,
-                 "id":73,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":346.864,
-                 "y":509.606
-                }, 
-                {
-                 "gid":50,
-                 "height":16,
                  "id":80,
                  "name":"",
                  "properties":[
