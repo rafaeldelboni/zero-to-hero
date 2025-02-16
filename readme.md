@@ -68,9 +68,11 @@ npx http-server resources/public -g
 - [x] **Fixes**
     - [x] Adjust spike collider size
     - [x] Push not colliding with walls
+    - [x] Push is allowed when blob
 - [ ] **HUD**
     - [ ] Show information messages based on events
     - [ ] Hold in screen until key press
+    - [ ] Add game timer
 - [ ] **Menus**
     - [ ] Inital scene
     - [ ] Pause scene

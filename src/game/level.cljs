@@ -32,8 +32,8 @@
   (let [^js/Object boxes (level-objects->group! ctx level "pushables")]
     (doseq [^js/Object box (.-entries (.-children boxes))]
       (-> (.-body box)
-          (body/set-size! 13 16)
-          (body/set-slide-factor! 0.1 0.1)
+          (body/set-size! 16 16)
+          (body/set-slide-factor! 0.01 1)
           (body/set-drag! 10 10)))
     (physics/add-collider!
      ctx boxes boxes (fn [collider-1 collider-2]
@@ -45,10 +45,11 @@
                            (body/set-allow-gravity! b1 true)))))
     (physics/add-collider!
      ctx player boxes (fn [collider-1 collider-2]
-                        (let [level (registry/get! ctx :game/level)
+                        (let [blob? (oget collider-1 :player/blob)
+                              level (registry/get! ctx :game/level)
                               ^js/Object b1 (.-body collider-1)
                               ^js/Object b2 (.-body collider-2)]
-                          (if (> level 1)
+                          (if (and (not blob?) (> level 1))
                             (if (and (body/touching-down? b1)
                                      (body/touching-up? b2))
                               (body/set-static! b2)
@@ -59,7 +60,11 @@
 
 (defn- set-pushable-blocks!
   [^js/Object ctx ^js/Object pushables ^js/Object level]
-  (let [^js/Object blocks (level-objects->group! ctx level "pushable-blocks")]
+  (let [^js/Object blocks (level-objects->group! ctx level "pushable-blocks"
+                                                 {:allowGravity false})]
+    (doseq [^js/Object box (.-entries (.-children blocks))]
+      (-> (.-body box)
+          (body/set-static!)))
     (physics/add-overlap!
      ctx blocks pushables (fn [_collider-1 collider-2]
                             (let [^js/Object b2 (.-body collider-2)]
@@ -95,7 +100,8 @@
         diamond-name 22
         heart-name 42
         hidden-heart-name 41
-        ^js/Object pickables (level-objects->group! ctx level "pickables")]
+        ^js/Object pickables (level-objects->group! ctx level "pickables"
+                                                    {:allowGravity false})]
     (registry/on-change! ctx update-pickups-via-registry pickables)
     (doseq [^js/Object pickup (.-entries (.-children pickables))]
       (condp = (sprite->frame-name pickup)
