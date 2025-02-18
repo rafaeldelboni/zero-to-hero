@@ -11,7 +11,7 @@
 
 (defn create! []
   (this-as ^js/Object this
-    (let [player (player/create! this 64 170)
+    (let [player (player/create! this (* 16 4) (* 16 10))
           cursors (-> this .-input .-keyboard (.createCursorKeys))
           level (level/create-tiled-level! this player "level-1")]
       (level/create-camera! this player)

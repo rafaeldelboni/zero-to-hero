@@ -156,12 +156,18 @@
   [^js/Object ctx ^js/Object player ^js/Object level]
   (let [hidden-spike 203
         active-spike 183
+        normal-spike 122
+        upwards-spikes #{hidden-spike active-spike normal-spike}
         ^js/Object threats (level-objects->group!
                             ctx level "threats" {:allowGravity false})]
     (doseq [^js/Object threat (.-entries (.-children threats))]
-      (-> (.-body threat)
-          (body/set-size! 16 8)
-          (body/set-offset! 0 8))
+      (if (contains? upwards-spikes (sprite->frame-name threat))
+        (-> (.-body threat)
+            (body/set-size! 16 8)
+            (body/set-offset! 0 8))
+        (-> (.-body threat)
+            (body/set-size! 16 8)
+            (body/set-offset! 0 0)))
       (if (= (sprite->frame-name threat) hidden-spike)
         (do
           (.play threat "trap")

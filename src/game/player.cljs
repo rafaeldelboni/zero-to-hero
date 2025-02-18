@@ -10,6 +10,30 @@
 (def blob-size {:x 12 :y 16})
 (def human-size {:x 14 :y 32})
 
+(defn- invulnerable? [^js/Object player]
+  (oget player :player/invulnerable))
+
+(defn- blob? [^js/Object player]
+  (oget player :player/blob))
+
+(defn- on-floor? [^js/Object container]
+  (when-let [body (.-body container)]
+    (or (body/blocked-down? body)
+        (body/touching-down? body))))
+
+(defn- pushing? [^js/Object container]
+  (when-let [body (.-body container)]
+    (or (body/blocked-left? body)
+        (body/touching-left? body)
+        (body/blocked-right? body)
+        (body/touching-right? body))))
+
+(defn- jumping? [^js/Object player]
+  (not (zero? (body/get-velocity-y (.-body player)))))
+
+(defn- attacking? [^js/Object player]
+  (oget player :player/attack))
+
 (defn- game-over! [^js/Object ctx]
   ;; TODO move to game over scene
   (registry/remove-all-listeners! ctx)
@@ -27,13 +51,15 @@
   ; Health Change
   (when (= updated-key :game/health)
     (let [current-health (oget player :game/health)
-          damage? (> current-health updated-value)]
-      (oassoc! player :game/health updated-value)
+          is-damage? (> current-health updated-value)]
+      (when (not is-damage?)
+        (oassoc! player :game/health updated-value))
 
       (when (<= updated-value 0)
         (game-over! ctx))
 
-      (when (and damage? (> updated-value 0) (< updated-value 3))
+      (when (and is-damage? (not (invulnerable? player)) (> updated-value 0))
+        (oassoc! player :game/health updated-value)
         (oassoc! player :player/invulnerable true)
         (-> ctx .-tweens
             (.add #js {:targets player
@@ -86,30 +112,6 @@
     (if tile
       (.-collides (.-properties tile))
       false)))
-
-(defn- invulnerable? [^js/Object player]
-  (oget player :player/invulnerable))
-
-(defn- blob? [^js/Object player]
-  (oget player :player/blob))
-
-(defn- on-floor? [^js/Object container]
-  (when-let [body (.-body container)]
-    (or (body/blocked-down? body)
-        (body/touching-down? body))))
-
-(defn- pushing? [^js/Object container]
-  (when-let [body (.-body container)]
-    (or (body/blocked-left? body)
-        (body/touching-left? body)
-        (body/blocked-right? body)
-        (body/touching-right? body))))
-
-(defn- jumping? [^js/Object player]
-  (not (zero? (body/get-velocity-y (.-body player)))))
-
-(defn- attacking? [^js/Object player]
-  (oget player :player/attack))
 
 (defn- play!
   [^js/Object player ^js/String state]
