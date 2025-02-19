@@ -1,6 +1,7 @@
 (ns game.scenes.preload
   (:require
-   [game.phaser.registry :as registry]))
+   [game.phaser.registry :as registry]
+   [game.time :as time]))
 
 (defn- load-font [name url]
   (let [new-font (new js/FontFace name (str "url(" url ")"))]
@@ -34,4 +35,5 @@
   (this-as ^js/Object this
     (registry/set! this :game/health 3)
     (registry/set! this :game/score 0)
-    (registry/set! this :game/level 0)))
+    (registry/set! this :game/level 0)
+    (registry/set! this :game/time (time/now-seconds!))))

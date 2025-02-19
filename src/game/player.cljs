@@ -5,7 +5,8 @@
    [game.phaser.cursors :as cursors]
    [game.phaser.physics :as physics]
    [game.phaser.registry :as registry]
-   [game.player.animations :as player.anims]))
+   [game.player.animations :as player.anims]
+   [game.time :as time]))
 
 (def blob-size {:x 12 :y 16})
 (def human-size {:x 14 :y 32})

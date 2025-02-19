@@ -5,7 +5,8 @@
    [game.phaser.anims :as anims]
    [game.phaser.body :as body]
    [game.phaser.physics :as physics]
-   [game.phaser.registry :as registry]))
+   [game.phaser.registry :as registry]
+   [game.time :as time]))
 
 (defn- sprite->frame-name [^js/Object sprite]
   (-> sprite .-frame .-name))
@@ -224,6 +225,7 @@
     (physics/add-collider! ctx pushables ground)
     (physics/add-collider! ctx pushable-blocks ground)
     (physics/add-collider! ctx destructibles ground)
+    (physics/add-collider! ctx pushables destructibles)
     (physics/add-collider! ctx pickables ground)
     level))
 
