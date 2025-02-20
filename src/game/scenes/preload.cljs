@@ -45,12 +45,16 @@
     (let [loading-text (text/set-text! this "loading..."
                                        {:x 150 :y 240
                                         :alpha 1
-                                        :font "8px public-pixel"
+                                        :fontFamily "Courier"
+                                        :fontSize "16px"
+                                        :fontStyle "bold"
                                         :fill "#cccccc"})
           start-text (text/set-text! this "press [space] to start!"
-                                     {:x 120 :y 240
+                                     {:x 110 :y 240
                                       :alpha 0
-                                      :font "8px public-pixel"
+                                      :fontFamily "Courier"
+                                      :fontSize "16px"
+                                      :fontStyle "bold"
                                       :fill "#cccccc"})]
       (-> this .-add (.image 200 140 "logo"))
       (-> this .-add (.image 200 60 "logo-text"))
@@ -66,8 +70,8 @@
     (let [cursors (-> this .-input .-keyboard (.createCursorKeys))]
       (when (and (oget this :load/font)
                  (oget this :load/assets))
-        (.setAlpha ^js/Object (oget this :load/loading-text) 0)
-        (.setAlpha ^js/Object (oget this :load/start-text) 1)
+        (.setAlpha ^js/Object (oget this :load/loading-text) 1)
+        (.setAlpha ^js/Object (oget this :load/start-text) 0)
         (when (cursors/attack-just-pressed? cursors)
           (-> this .-scene (.start "hud"))
           (-> this .-scene (.start "level-1")))))))
