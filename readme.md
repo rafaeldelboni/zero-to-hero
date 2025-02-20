@@ -72,10 +72,10 @@ npx http-server resources/public -g
 - [x] **HUD**
     - [x] Show information messages based on events
     - [x] Add game timer
-- [ ] **Menus**
-    - [ ] Inital scene
-    - [ ] Pause scene
-    - [ ] Game over scene
+- [x] **Menus**
+    - [x] Loading scene
+    - [x] Inital scene
+    - [x] Game over scene
 - [ ] **Audio**
     - [ ] Move
     - [ ] Jump

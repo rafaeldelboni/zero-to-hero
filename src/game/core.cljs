@@ -3,9 +3,9 @@
    ["phaser" :refer [AUTO Game Scale]]
    [game.interop :refer [debug?]]
    [game.scenes.hud :as scene.hud]
+   [game.scenes.level1 :as scene.level1]
    [game.scenes.preload :as scene.preload]
-   [game.scenes.test :as scene.test]
-   [game.scenes.level1 :as scene.level1]))
+   [game.scenes.test :as scene.test]))
 
 (defonce state (atom {}))
 
@@ -23,7 +23,8 @@
                      :mode (.-FIT Scale)}
              :scene [{:key "preload"
                       :preload scene.preload/preload!
-                      :create scene.preload/create!}
+                      :create scene.preload/create!
+                      :update scene.preload/update!}
                      {:key "test-level"
                       :preload scene.test/preload!
                       :create scene.test/create!

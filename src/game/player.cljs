@@ -5,8 +5,7 @@
    [game.phaser.cursors :as cursors]
    [game.phaser.physics :as physics]
    [game.phaser.registry :as registry]
-   [game.player.animations :as player.anims]
-   [game.time :as time]))
+   [game.player.animations :as player.anims]))
 
 (def blob-size {:x 12 :y 16})
 (def human-size {:x 14 :y 32})
@@ -39,6 +38,7 @@
   ;; TODO move to game over scene
   (registry/remove-all-listeners! ctx)
   (registry/set! ctx :game/health 3)
+  (-> ctx .-scene (.stop "hud"))
   (-> ctx .-scene (.start "preload")))
 
 (defn- update-via-registry
