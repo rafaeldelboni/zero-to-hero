@@ -70,8 +70,8 @@
     (let [cursors (-> this .-input .-keyboard (.createCursorKeys))]
       (when (and (oget this :load/font)
                  (oget this :load/assets))
-        (.setAlpha ^js/Object (oget this :load/loading-text) 1)
-        (.setAlpha ^js/Object (oget this :load/start-text) 0)
+        (.setAlpha ^js/Object (oget this :load/loading-text) 0)
+        (.setAlpha ^js/Object (oget this :load/start-text) 1)
         (when (cursors/attack-just-pressed? cursors)
           (-> this .-scene (.start "hud"))
           (-> this .-scene (.start "level-1")))))))
