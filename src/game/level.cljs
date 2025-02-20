@@ -230,6 +230,7 @@
 
 (defn create-camera!
   [^js/Object ctx ^js/Object player]
-  (-> ctx .-cameras .-main (.setRoundPixels false))
-  (-> ctx .-cameras .-main (.startFollow player false))
-  (-> ctx .-cameras .-main .-followOffset (.set 0 75)))
+  (-> ctx .-cameras .-main (.startFollow player false 0.025 0.025))
+  (-> ctx .-cameras .-main .-followOffset (.set 0 25))
+  (-> ctx .-cameras .-main (.setBounds 0 0 (* 16 112) (* 16 48)))
+  (-> ctx .-cameras .-main (.setDeadzone 128 64)))

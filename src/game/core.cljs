@@ -4,6 +4,7 @@
    [game.interop :refer [debug?]]
    [game.scenes.hud :as scene.hud]
    [game.scenes.level1 :as scene.level1]
+   [game.scenes.main-menu :as scene.main-menu]
    [game.scenes.preload :as scene.preload]
    [game.scenes.test :as scene.test]))
 
@@ -22,9 +23,10 @@
              :scale {:autoCenter (.-CENTER_BOTH Scale)
                      :mode (.-FIT Scale)}
              :scene [{:key "preload"
-                      :preload scene.preload/preload!
-                      :create scene.preload/create!
-                      :update scene.preload/update!}
+                      :preload scene.preload/preload!}
+                     {:key "main-menu"
+                      :create scene.main-menu/create!
+                      :update scene.main-menu/update!}
                      {:key "test-level"
                       :preload scene.test/preload!
                       :create scene.test/create!

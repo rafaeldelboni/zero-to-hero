@@ -39,7 +39,7 @@
   (registry/remove-all-listeners! ctx)
   (registry/set! ctx :game/health 3)
   (-> ctx .-scene (.stop "hud"))
-  (-> ctx .-scene (.start "preload")))
+  (-> ctx .-scene (.start "main-menu")))
 
 (defn- update-via-registry
   [^js/Object ctx

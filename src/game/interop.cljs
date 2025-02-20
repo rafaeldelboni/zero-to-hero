@@ -2,7 +2,8 @@
   (:require
    [goog.object :as obj]))
 
-(def debug? goog.DEBUG)
+; (def debug? goog.DEBUG)
+(def debug? false)
 
 (defn keyword->str [k]
   (if (keyword? k) (str (symbol k)) k))
