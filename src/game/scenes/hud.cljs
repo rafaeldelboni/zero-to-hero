@@ -1,7 +1,8 @@
 (ns game.scenes.hud
   (:require
    [game.interop :refer [oassoc! oget]]
-   [game.phaser.registry :as registry]))
+   [game.phaser.registry :as registry]
+   [game.phaser.text :as text]))
 
 (defn- update-heart! [ctx]
   (let [health (oget ctx :game/health)
@@ -25,18 +26,18 @@
     (let [heart-icon (-> this .-add
                          (.sprite 10 10 "monochrome-ss" 41))
 
-          health-text (-> this .-add
-                          (.text 20 5 "-" #js {:font "8px public-pixel"
-                                               :fill "#ffffff"
-                                               :stroke "#000000"
-                                               :strokeThickness 2}))
+          health-text (text/set-text! this "-" {:x 20 :y 5
+                                                :font "8px public-pixel"
+                                                :fill "#ffffff"
+                                                :stroke "#000000"
+                                                :strokeThickness 2})
           diamond-icon (-> this .-add
                            (.sprite 47 10 "monochrome-ss" 22))
-          score-text (-> this .-add
-                         (.text 57 5 "-" #js {:font "8px public-pixel"
-                                              :fill "#ffffff"
-                                              :stroke "#000000"
-                                              :strokeThickness 2}))]
+          score-text (text/set-text! this "-" {:x 57 :y 5
+                                               :font "8px public-pixel"
+                                               :fill "#ffffff"
+                                               :stroke "#000000"
+                                               :strokeThickness 2})]
 
       (oassoc! this :hud/health-text health-text)
       (oassoc! this :hud/score-text score-text)

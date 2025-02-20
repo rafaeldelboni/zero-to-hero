@@ -5,8 +5,7 @@
    [game.phaser.anims :as anims]
    [game.phaser.body :as body]
    [game.phaser.physics :as physics]
-   [game.phaser.registry :as registry]
-   [game.time :as time]))
+   [game.phaser.registry :as registry]))
 
 (defn- sprite->frame-name [^js/Object sprite]
   (-> sprite .-frame .-name))
