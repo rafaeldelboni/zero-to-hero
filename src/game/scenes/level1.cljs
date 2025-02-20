@@ -2,6 +2,7 @@
   (:require
    [game.interop :refer [oassoc! oget]]
    [game.level :as level]
+   [game.phaser.cursors :as cursors]
    [game.phaser.registry :as registry]
    [game.phaser.text :as text]
    [game.player :as player]
@@ -84,7 +85,7 @@
 (defn create! []
   (this-as ^js/Object this
     (let [player (player/create! this (* 16 4) (* 16 10))
-          cursors (-> this .-input .-keyboard (.createCursorKeys))
+          cursors (cursors/create! this)
           level (level/create-tiled-level! this player "level-1")
           final-score (set-final-score! this)]
       (registry/on-change! this update-msgs!)

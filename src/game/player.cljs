@@ -218,6 +218,6 @@
                (can-blob? player))
       (toggle-blob player level))
 
-    (when (and (cursors/up-just-pressed? cursor)
+    (when (and (cursors/jump-just-pressed? cursor)
                (can-jump? player))
       (jump player jump-force))))

@@ -33,10 +33,10 @@
 
 (defn update! []
   (this-as ^js/Object this
-    (let [cursors (-> this .-input .-keyboard (.createCursorKeys))]
+    (let [cursors (cursors/create! this)]
       (when (registry/get! this :load/font)
         (.setAlpha ^js/Object (oget this :load/loading-text) 0)
         (.setAlpha ^js/Object (oget this :load/start-text) 1)
-        (when (cursors/attack-just-pressed? cursors)
+        (when (cursors/jump-just-pressed? cursors)
           (-> this .-scene (.start "hud"))
           (-> this .-scene (.start "level-1")))))))
