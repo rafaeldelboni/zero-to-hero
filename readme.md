@@ -1,3 +1,4 @@
+![logo](docs/header.png)
 # Zero to Hero
 Game made for the [First Dev Jam 2025](https://docs.google.com/spreadsheets/d/1Zl4_gNtujm9f759oWaeIs22dplejp5yB_J1pHmns72I/edit?gid=324790356#gid=324790356)
 
