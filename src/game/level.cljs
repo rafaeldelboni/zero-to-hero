@@ -32,9 +32,9 @@
   (let [^js/Object boxes (level-objects->group! ctx level "pushables")]
     (doseq [^js/Object box (.-entries (.-children boxes))]
       (-> (.-body box)
-          (body/set-size! 16 16)
-          (body/set-slide-factor! 0.01 1)
-          (body/set-drag! 10 10)))
+          (body/set-size! 15 16)
+          (body/set-offset! 0 0)
+          (body/set-slide-factor! 0.01 0)))
     (physics/add-collider!
      ctx boxes boxes (fn [collider-1 collider-2]
                        (let [^js/Object b1 (.-body collider-1)
@@ -65,13 +65,7 @@
     (doseq [^js/Object box (.-entries (.-children blocks))]
       (-> (.-body box)
           (body/set-static!)))
-    (physics/add-overlap!
-     ctx blocks pushables (fn [_collider-1 collider-2]
-                            (let [^js/Object b2 (.-body collider-2)]
-                              (if (or (body/touching-right? b2)
-                                      (body/touching-left? b2))
-                                (body/set-static! b2)
-                                (body/set-kinetic! b2)))))
+    (physics/add-collider! ctx blocks pushables)
     blocks))
 
 (defn- pickup!

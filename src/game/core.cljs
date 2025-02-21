@@ -18,7 +18,7 @@
              :audio {:disableWebAudio true} ;; TODO
              :physics {:default "arcade"
                        :arcade {:fixedStep false
-                                :gravity {:y 2000}
+                                :gravity {:y 1000}
                                 :debug debug?}}
              :scale {:autoCenter (.-CENTER_BOTH Scale)
                      :mode (.-FIT Scale)}
@@ -27,7 +27,7 @@
                      {:key "main-menu"
                       :create scene.main-menu/create!
                       :update scene.main-menu/update!}
-                     {:key "test-level"
+                     {:key "level-test"
                       :preload scene.test/preload!
                       :create scene.test/create!
                       :update scene.test/update!}

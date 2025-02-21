@@ -27,4 +27,5 @@
 
 (defn jump-just-pressed? [^js/Object cursors]
   (or (just-pressed? (.-SPACE cursors))
-      (just-pressed? (.-UP cursors))))
+      (just-pressed? (.-UP cursors))
+      (just-pressed? (.-W cursors))))

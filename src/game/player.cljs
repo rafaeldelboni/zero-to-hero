@@ -7,8 +7,8 @@
    [game.phaser.registry :as registry]
    [game.player.animations :as player.anims]))
 
-(def blob-size {:x 12 :y 16})
-(def human-size {:x 14 :y 32})
+(def blob-size {:x 12 :y 10 :offset {:x 0 :y 2}})
+(def human-size {:x 14 :y 24 :offset {:x 0 :y 2}})
 
 (defn- invulnerable? [^js/Object player]
   (oget player :player/invulnerable))
@@ -35,11 +35,16 @@
   (oget player :player/attack))
 
 (defn- game-over! [^js/Object ctx]
-  ;; TODO move to game over scene
   (registry/remove-all-listeners! ctx)
   (registry/set! ctx :game/health 3)
   (-> ctx .-scene (.stop "hud"))
   (-> ctx .-scene (.start "main-menu")))
+
+(defn- resize-player [^js/Object player {:keys [x y offset]}]
+  (.setSize player x y)
+  (-> (.-body player)
+      (body/set-size! x y)
+      (body/set-offset! (:x offset) (:y offset))))
 
 (defn- update-via-registry
   [^js/Object ctx
@@ -47,8 +52,7 @@
    _p updated-key updated-value]
   ; Level up
   (when (= updated-key :game/level)
-    (oassoc! player :game/level updated-value)
-    (prn :game/level (oget player :game/level)))
+    (oassoc! player :game/level updated-value))
   ; Health Change
   (when (= updated-key :game/health)
     (let [current-health (oget player :game/health)
@@ -62,6 +66,7 @@
       (when (and is-damage? (not (invulnerable? player)) (> updated-value 0))
         (oassoc! player :game/health updated-value)
         (oassoc! player :player/invulnerable true)
+        (-> ctx .-cameras .-main (.shake 100 0.01))
         (-> ctx .-tweens
             (.add #js {:targets player
                        :alpha 0.35
@@ -91,7 +96,10 @@
     (body/set-allow-gravity! (.-body attack-area) false)
 
     (physics/world-enable! ctx container)
-    (body/set-bounce! (.-body container) 0.0)
+    (resize-player container blob-size)
+    (-> (.-body container)
+        (body/set-slide-factor! 1 1)
+        (body/set-drag! 0 1))
 
     (.on (.getByName container "slash")
          "animationcomplete-attack-slash"
@@ -123,18 +131,14 @@
       (jumping? player) (player.anims/play-container-animations! player "jump" level)
       :else (player.anims/play-container-animations! player state level))))
 
-(defn- resize-player [^js/Object player w h]
-  (.setSize player w h)
-  (.setSize (.-body player) w h))
-
 (defn- toggle-blob [^js/Object player ^js/Object level]
   (when-not (and (blob? player)
                  (collides-above? player level))
     (oupdate! player :player/blob not)
     (body/set-velocity! (.-body player) 0 -150)
     (if (blob? player)
-      (resize-player player (:x blob-size) (:y blob-size))
-      (resize-player player (:x human-size) (:y human-size)))))
+      (resize-player player blob-size)
+      (resize-player player human-size))))
 
 (defn- idle [^js/Object player]
   (body/set-velocity-x! (.-body player) 0)
@@ -155,9 +159,7 @@
       :left (do (body/set-velocity-x! body (* velocity -1))
                 (player.anims/flip-x-container-sprites! player true))
       :right (do (body/set-velocity-x! body velocity)
-                 (player.anims/flip-x-container-sprites! player false))
-      :up (body/set-velocity-y! body (* velocity -1))
-      :down (body/set-velocity-y! body velocity)))
+                 (player.anims/flip-x-container-sprites! player false))))
   (play! player "walk"))
 
 (defn- level> [^js/Object player level]
@@ -168,6 +170,7 @@
 
 (defn- can-blob? [^js/Object player]
   (and (level> player 0)
+       (not (jumping? player))
        (not (attacking? player))))
 
 (defn- can-attack? [^js/Object player]
@@ -183,15 +186,13 @@
 
 (defn- get-speed [^js/Object player]
   (cond
-    (invulnerable? player) 50
-    (pushing? player) 50
-    (blob? player) 150
-    :else 200))
+    (blob? player) 100
+    :else 115))
 
 (defn- get-jump-force [^js/Object player]
   (cond
-    (blob? player) 400
-    :else 450))
+    (blob? player) 275
+    :else 325))
 
 (defn create! [^js/Object ctx x y]
   (player.anims/create-all-animations! ctx)

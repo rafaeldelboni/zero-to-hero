@@ -1,6 +1,6 @@
 (ns game.scenes.main-menu
   (:require
-   [game.interop :refer [oassoc! oget]]
+   [game.interop :refer [debug? oassoc! oget]]
    [game.phaser.cursors :as cursors]
    [game.phaser.registry :as registry]
    [game.phaser.text :as text]
@@ -31,12 +31,18 @@
       (registry/set! this :game/level 0)
       (registry/set! this :game/time (time/now-seconds!)))))
 
+(defn- start-scenes! [^js/Object this]
+  (-> this .-scene (.stop "main-menu"))
+  (-> this .-scene (.start "hud"))
+  (-> this .-scene (.start "level-1")))
+
 (defn update! []
   (this-as ^js/Object this
-    (let [cursors (cursors/create! this)]
-      (when (registry/get! this :load/font)
-        (.setAlpha ^js/Object (oget this :load/loading-text) 0)
-        (.setAlpha ^js/Object (oget this :load/start-text) 1)
-        (when (cursors/jump-just-pressed? cursors)
-          (-> this .-scene (.start "hud"))
-          (-> this .-scene (.start "level-1")))))))
+    (if debug?
+      (start-scenes! this)
+      (let [cursors (cursors/create! this)]
+        (when (registry/get! this :load/font)
+          (.setAlpha ^js/Object (oget this :load/loading-text) 0)
+          (.setAlpha ^js/Object (oget this :load/start-text) 1)
+          (when (cursors/jump-just-pressed? cursors)
+            (start-scenes! this)))))))
