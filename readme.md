@@ -77,22 +77,25 @@ npx http-server resources/public -g
     - [x] Loading scene
     - [x] Inital scene
     - [x] Game over scene
-- [ ] **Audio**
-    - [ ] Move
-    - [ ] Jump
-    - [ ] Push
-    - [ ] Attack
-    - [ ] Destroy
-    - [ ] Damage
-    - [ ] Coin
-    - [ ] Health
-    - [ ] Orb
-    - [ ] BG Music 
+- [x] **Audio**
+    - [x] Move
+    - [x] Jump
+    - [x] Toggle
+    - [x] Game Over
+    - [x] Attack
+    - [x] Destroy
+    - [x] Damage
+    - [x] Coin
+    - [x] Health
+    - [x] Orb
+    - [x] BG Music 
 
 ## Tools
 - [aseprite](https://www.aseprite.org/)
 - [tiled](https://www.mapeditor.org/)
 
 ## Credits
-- https://kenney.nl/assets/1-bit-platformer-pack
-- https://ggbot.itch.io/public-pixel-font
+- Background Tiles: https://kenney.nl/assets/1-bit-platformer-pack
+- Font: https://ggbot.itch.io/public-pixel-font
+- SFX: https://kronbits.itch.io/freesfx
+- Music: https://safetystoatstudios.itch.io/free-vgms

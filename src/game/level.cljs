@@ -3,6 +3,7 @@
    ["phaser" :refer [Animations]]
    [game.interop :refer [oassoc! oget]]
    [game.phaser.anims :as anims]
+   [game.phaser.audio :as audio]
    [game.phaser.body :as body]
    [game.phaser.physics :as physics]
    [game.phaser.registry :as registry]))
@@ -55,7 +56,6 @@
                               (body/set-static! b2)
                               (body/set-kinetic! b2))
                             (body/set-static! b2)))))
-
     boxes))
 
 (defn- set-pushable-blocks!
@@ -113,10 +113,15 @@
      (fn [^js/Object _collider-1 ^js/Object collider-2]
        (let [level (registry/get! ctx :game/level)]
          (condp = (.-name collider-2)
-           "orb" (pickup! ctx collider-2 :game/level)
-           "diamond" (pickup! ctx collider-2 :game/score)
-           "heart" (pickup! ctx collider-2 :game/health)
-           "hidden-heart" (when (> level 2) (pickup! ctx collider-2 :game/health))))))
+           "orb" (do (pickup! ctx collider-2 :game/level)
+                     (audio/key-play! player :player.audio/orb))
+           "diamond" (do (pickup! ctx collider-2 :game/score)
+                         (audio/key-play! player :player.audio/coin))
+           "heart" (do (pickup! ctx collider-2 :game/health)
+                       (audio/key-play! player :player.audio/health))
+           "hidden-heart" (when (> level 2)
+                            (pickup! ctx collider-2 :game/health)
+                            (audio/key-play! player :player.audio/health))))))
     pickables))
 
 (defn- set-destructibles
@@ -134,6 +139,7 @@
        (let [attacking? (oget player :player/attack)]
          (when attacking?
            (.setEnable (.-body collider-2) false)
+           (audio/key-play! player :player.audio/destroy)
            (-> ctx .-tweens
                (.add #js {:targets collider-2
                           :angle #js {:from 0 :to 90}

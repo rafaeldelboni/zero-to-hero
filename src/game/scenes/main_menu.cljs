@@ -26,13 +26,14 @@
       (-> this .-add (.image 200 60 "logo-text"))
       (oassoc! this :load/loading-text loading-text)
       (oassoc! this :load/start-text start-text)
+      (oassoc! this :load/start-text start-text)
       (registry/set! this :game/health 3)
       (registry/set! this :game/score 0)
       (registry/set! this :game/level 0)
       (registry/set! this :game/time (time/now-seconds!)))))
 
 (defn- start-scenes! [^js/Object this]
-  (-> this .-scene (.stop "main-menu"))
+  (-> this .-scene .stop)
   (-> this .-scene (.start "hud"))
   (-> this .-scene (.start "level-1")))
 

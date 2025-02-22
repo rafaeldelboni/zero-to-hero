@@ -2,6 +2,7 @@
   (:require
    [game.interop :refer [oassoc! oget]]
    [game.level :as level]
+   [game.phaser.audio :as audio]
    [game.phaser.cursors :as cursors]
    [game.phaser.registry :as registry]
    [game.phaser.text :as text]
@@ -58,7 +59,7 @@
                {:x 7.5 :y 38.5
                 :size 8 :alpha 0.25
                 :msg-key :level/level-4-msg
-                :msg-value (str "Press [space]\r"
+                :msg-value (str "Press [shift]\r"
                                 "to use sword")}))
 
 (defn- update-msgs! [^js/Object ctx _p k v]
@@ -87,9 +88,13 @@
     (let [player (player/create! this (* 16 4) (* 16 10))
           cursors (cursors/create! this)
           level (level/create-tiled-level! this player "level-1")
-          final-score (set-final-score! this)]
+          final-score (set-final-score! this)
+          bgm (audio/add! this "the-vapours" {:volume 0.075
+                                              :loop true})]
       (registry/on-change! this update-msgs!)
       (level/create-camera! this player)
+      (.play bgm)
+      (oassoc! this :level/bgm bgm)
       (oassoc! this :level/player player)
       (oassoc! this :level/cursors cursors)
       (oassoc! this :level/current level)
@@ -98,4 +103,6 @@
 (defn update! []
   (this-as ^js/Object this
     (score-msg! this)
-    (player/update! this)))
+    (player/update! this)
+    (when (cursors/m-just-pressed? (oget this :level/cursors))
+      (audio/key-toggle! this :level/bgm))))

@@ -1,6 +1,7 @@
 (ns game.player
   (:require
    [game.interop :refer [oassoc! oget oupdate!]]
+   [game.phaser.audio :as audio]
    [game.phaser.body :as body]
    [game.phaser.cursors :as cursors]
    [game.phaser.physics :as physics]
@@ -37,6 +38,7 @@
 (defn- game-over! [^js/Object ctx]
   (registry/remove-all-listeners! ctx)
   (registry/set! ctx :game/health 3)
+  (-> ctx .-scene .stop)
   (-> ctx .-scene (.stop "hud"))
   (-> ctx .-scene (.start "main-menu")))
 
@@ -61,11 +63,13 @@
         (oassoc! player :game/health updated-value))
 
       (when (<= updated-value 0)
+        (audio/key-play! player :player.audio/game-over)
         (game-over! ctx))
 
       (when (and is-damage? (not (invulnerable? player)) (> updated-value 0))
         (oassoc! player :game/health updated-value)
         (oassoc! player :player/invulnerable true)
+        (audio/key-play! player :player.audio/damage)
         (-> ctx .-cameras .-main (.shake 100 0.01))
         (-> ctx .-tweens
             (.add #js {:targets player
@@ -74,6 +78,18 @@
                        :duration 1000
                        :ease "Bounce"
                        :onComplete #(oassoc! player :player/invulnerable false)}))))))
+
+(defn- create-audios! [^js/Object ctx ^js/Object player]
+  (oassoc! player :player.audio/attack (audio/add! ctx "attack"))
+  (oassoc! player :player.audio/coin (audio/add! ctx "coin"))
+  (oassoc! player :player.audio/damage (audio/add! ctx "damage"))
+  (oassoc! player :player.audio/destroy (audio/add! ctx "destroy"))
+  (oassoc! player :player.audio/game-over (audio/add! ctx "game-over"))
+  (oassoc! player :player.audio/health (audio/add! ctx "health"))
+  (oassoc! player :player.audio/jump (audio/add! ctx "jump" {:volume 0.25}))
+  (oassoc! player :player.audio/move (audio/add! ctx "move" {:volume 0.05 :detune -250}))
+  (oassoc! player :player.audio/orb (audio/add! ctx "orb"))
+  (oassoc! player :player.audio/toggle (audio/add! ctx "toggle")))
 
 (defn- create-container! [^js/Object ctx x y]
   (let [head (player.anims/create-sprite! ctx 0 0 "hero" "blob-empty-0" "head")
@@ -108,6 +124,7 @@
     (oassoc! container :player/blob true)
     (oassoc! container :player/attack false)
     (oassoc! container :player/invulnerable false)
+    (create-audios! ctx container)
     (player.anims/play-container-animations! container "idle" 0)
 
     (registry/on-change! ctx update-via-registry container)
@@ -135,6 +152,7 @@
   (when-not (and (blob? player)
                  (collides-above? player level))
     (oupdate! player :player/blob not)
+    (audio/key-play! player :player.audio/toggle)
     (body/set-velocity! (.-body player) 0 -150)
     (if (blob? player)
       (resize-player player blob-size)
@@ -146,11 +164,13 @@
 
 (defn- jump [^js/Object player velocity]
   (body/set-velocity-y! (.-body player) (* velocity -1))
+  (audio/key-play! player :player.audio/jump)
   (play! player "jump"))
 
 (defn- attack [^js/Object player]
   (oassoc! player :player/attack true)
   (body/set-velocity-x! (.-body player) 0)
+  (audio/key-play! player :player.audio/attack)
   (play! player "attack"))
 
 (defn- move [^js/Object player direction velocity]
@@ -160,6 +180,8 @@
                 (player.anims/flip-x-container-sprites! player true))
       :right (do (body/set-velocity-x! body velocity)
                  (player.anims/flip-x-container-sprites! player false))))
+  (when (not (jumping? player))
+    (audio/key-play! player :player.audio/move true))
   (play! player "walk"))
 
 (defn- level> [^js/Object player level]

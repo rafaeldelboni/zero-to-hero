@@ -15,7 +15,6 @@
              :width 400
              :height 300
              :pixelArt true
-             :audio {:disableWebAudio true} ;; TODO
              :physics {:default "arcade"
                        :arcade {:fixedStep false
                                 :gravity {:y 1000}

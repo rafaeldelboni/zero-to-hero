@@ -5,7 +5,7 @@
 (defn create!
   [^js/Object ctx]
   (-> ctx .-input .-keyboard
-      (.addKeys "A,S,D,W,UP,DOWN,LEFT,RIGHT,SPACE,SHIFT")))
+      (.addKeys "A,S,D,W,M,UP,DOWN,LEFT,RIGHT,SPACE,SHIFT")))
 
 (defn left-is-pressed? [^js/Object cursors]
   (or (-> cursors .-A .-isDown)
@@ -17,6 +17,9 @@
 
 (defn just-pressed? [keystoke]
   ((-> Input .-Keyboard .-JustDown) keystoke))
+
+(defn m-just-pressed? [^js/Object cursors]
+  (just-pressed? (.-M cursors)))
 
 (defn attack-just-pressed? [^js/Object cursors]
   (just-pressed? (.-SHIFT cursors)))
