@@ -1,94 +1,59 @@
 ![logo](docs/header.png)
 # Zero to Hero
-Game made for the [First Dev Jam 2025](https://docs.google.com/spreadsheets/d/1Zl4_gNtujm9f759oWaeIs22dplejp5yB_J1pHmns72I/edit?gid=324790356#gid=324790356)
+In Zero to Hero, a puzzle-platformer, you control a formless shadow blob that slowly learns to mimic the abilities of fallen heroes. Starting as an amorphous entity, you gradually acquire movement and  skills like legs to jump higher,  arms to push objects, and a sword to slash objects—each upgrade expanding your traversal options and puzzle-solving capabilities in a Metroidvania-inspired progression. 
+About
 
-## Requirements
+This game was made in 64 non consecutive hours for the [First Dev Jam 2025](https://docs.google.com/spreadsheets/d/1Zl4_gNtujm9f759oWaeIs22dplejp5yB_J1pHmns72I/edit?gid=324790356#gid=324790356)
+
+## Development
+
+### Requirements
 - [npm](https://www.npmjs.com/)
 - [clojure](https://clojure.org/)
 
-## Instructions
+### Instructions
 
-### Bootstrap
+#### Bootstrap
 ```bash
 npm install
 ```
 
-### Watch on http://localhost:5000
+#### Watch on http://localhost:5000
 ```bash
 npm run watch
 ```
 
-### Release Build (release/public)
+#### Release Build (release/public)
 ```bash
 npm run release
 ```
 
-#### Serve Release bundle
+##### Serve Release bundle
 ```bash
 gzip resources/public/js/*.js
 npx http-server resources/public -g
 ```
 
-## TODO
-- [x] **Handle blob transformation**
-    - [x] Play animation 
-    - [x] Resize body (physics)
-    - [x] Don't let player change forms if inside tunel
-- [x] **Push boxes**
-    - [x] Let player change forms if above pushable
-    - [x] Fix jumping? when over pushable
-    - [x] Find pushable object sprite in tiled spritesheet
-    - [x] Play animation
-- [x] **Attack destructibles**
-    - [x] Play animation
-    - [x] Collision + effect
-- [x] **HUD**
-    - [x] Load custom font
-    - [x] Switch score / hearts
-    - [x] Show Life / Coins as numbers
-- [x] **Camera**
-- [x] **Pickups**
-    - [x] Coins
-    - [x] Health
-    - [x] Level Orb
-- [x] **Health**
-    - [x] Receive damage
-    - [x] Restore health
-- [x] **Consider current form & level to allow/deny actions like jump, push, attack**
-    - [x] Lvl. 0 - Blob (can walk, jump)
-    - [x] Lvl. 1 - Legs (can run, jump higher)
-    - [x] Lvl. 2 - arms (can run, jump higher, push blocks)
-    - [x] Lvl. 3 - head (can run, jump higher, push blocks, see health pickups)
-    - [x] Lvl. 4 - sword (can run, jump higher, push blocks, see health pickups, destroy blocks)
-- [x] **Consider current form & level to show the right player anim/sprite**
-    - [x] Lvl. 0 - Blob (can walk, jump)
-    - [x] Lvl. 1 - Legs (can run, jump higher)
-    - [x] Lvl. 2 - arms (can run, jump higher, push blocks)
-    - [x] Lvl. 3 - head (can run, jump higher, push blocks, see health pickups)
-    - [x] Lvl. 4 - sword (can run, jump higher, push blocks, see health pickups, destroy blocks)
-- [x] **Fixes**
-    - [x] Adjust spike collider size
-    - [x] Push not colliding with walls
-    - [x] Push is allowed when blob
-- [x] **HUD**
-    - [x] Show information messages based on events
-    - [x] Add game timer
-- [x] **Menus**
-    - [x] Loading scene
-    - [x] Inital scene
-    - [x] Game over scene
-- [x] **Audio**
-    - [x] Move
-    - [x] Jump
-    - [x] Toggle
-    - [x] Game Over
-    - [x] Attack
-    - [x] Destroy
-    - [x] Damage
-    - [x] Coin
-    - [x] Health
-    - [x] Orb
-    - [x] BG Music 
+## Controlers
+
+- Movement
+  - **A** or **Left Arrow**
+  - **D** or **Right Arrow**
+  - **Space**, **W** or **Up Arrow**
+- Change Form
+  - **S** or **Down Arrow**
+- Attack
+  - **Shift**
+- Music Toggle
+  - **M**
+
+## Acknowledgements
+People that helped testing the development builds
+
+- [Gustavo Passos](https://github.com/theGusPassos)
+- [Lucas Bertin](https://github.com/lucascebertin)
+- [Lucas Teles](https://github.com/lucasteles)
+- [Luiz Strobelt](https://github.com/strobelt)
 
 ## Tools
 - [aseprite](https://www.aseprite.org/)
