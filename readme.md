@@ -70,6 +70,11 @@ People that helped testing the development builds
 - Music: https://safetystoatstudios.itch.io/free-vgms
 
 ## License
-The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law. 
 
+### Code
+This is free and unencumbered software released into the public domain.  
+For more information, please refer to <http://unlicense.org>
+
+### Assets
+The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.  
 For more information, please refer to https://creativecommons.org/publicdomain/zero/1.0/
