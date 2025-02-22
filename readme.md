@@ -68,3 +68,6 @@ People that helped testing the development builds
 - Font: https://ggbot.itch.io/public-pixel-font
 - SFX: https://kronbits.itch.io/freesfx
 - Music: https://safetystoatstudios.itch.io/free-vgms
+
+## License
+The Creative Commons CC0 Public Domain Dedication waives copyright interest in a work you've created and dedicates it to the world-wide public domain. 
