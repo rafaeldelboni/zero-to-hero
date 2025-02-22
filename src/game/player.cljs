@@ -83,7 +83,7 @@
   (oassoc! player :player.audio/attack (audio/add! ctx "attack"))
   (oassoc! player :player.audio/coin (audio/add! ctx "coin"))
   (oassoc! player :player.audio/damage (audio/add! ctx "damage"))
-  (oassoc! player :player.audio/destroy (audio/add! ctx "destroy"))
+  (oassoc! player :player.audio/destroy (audio/add! ctx "destroy" {:volume 0.15}))
   (oassoc! player :player.audio/game-over (audio/add! ctx "game-over"))
   (oassoc! player :player.audio/health (audio/add! ctx "health"))
   (oassoc! player :player.audio/jump (audio/add! ctx "jump" {:volume 0.25}))
