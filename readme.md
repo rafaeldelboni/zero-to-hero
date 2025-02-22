@@ -3,7 +3,7 @@
 In Zero to Hero, a puzzle-platformer, you control a formless shadow blob that slowly learns to mimic the abilities of fallen heroes. Starting as an amorphous entity, you gradually acquire movement and  skills like legs to jump higher,  arms to push objects, and a sword to slash objects—each upgrade expanding your traversal options and puzzle-solving capabilities in a Metroidvania-inspired progression. 
 About
 
-This game was made in 64 non consecutive hours for the [First Dev Jam 2025](https://docs.google.com/spreadsheets/d/1Zl4_gNtujm9f759oWaeIs22dplejp5yB_J1pHmns72I/edit?gid=324790356#gid=324790356)
+This game was made in 66 non consecutive hours for the [First Dev Jam 2025](https://docs.google.com/spreadsheets/d/1Zl4_gNtujm9f759oWaeIs22dplejp5yB_J1pHmns72I/edit?gid=324790356#gid=324790356)
 
 ## Development
 
@@ -32,6 +32,11 @@ npm run release
 ```bash
 gzip resources/public/js/*.js
 npx http-server resources/public -g
+```
+
+##### Generate Zip for itch.io
+```bash
+cd resources/public && zip -r zero.zip * && cd ../../
 ```
 
 ## Controlers
