@@ -89,7 +89,7 @@
   (oassoc! player :player.audio/jump (audio/add! ctx "jump" {:volume 0.25}))
   (oassoc! player :player.audio/move (audio/add! ctx "move" {:volume 0.05 :detune -250}))
   (oassoc! player :player.audio/orb (audio/add! ctx "orb"))
-  (oassoc! player :player.audio/toggle (audio/add! ctx "toggle")))
+  (oassoc! player :player.audio/toggle (audio/add! ctx "toggle" {:volume 0.45})))
 
 (defn- create-container! [^js/Object ctx x y]
   (let [head (player.anims/create-sprite! ctx 0 0 "hero" "blob-empty-0" "head")
