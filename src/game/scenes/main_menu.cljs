@@ -8,22 +8,22 @@
 
 (defn create! []
   (this-as ^js/Object this
+    (-> this .-add (.image 200 230 "logo"))
+    (-> this .-add (.image 200 60 "logo-text"))
     (let [loading-text (text/set-text! this "loading..."
-                                       {:x 150 :y 240
+                                       {:x 155 :y 115
                                         :alpha 1
                                         :fontFamily "Courier New"
                                         :fontSize "16px"
                                         :fontStyle "bold"
                                         :fill "#cccccc"})
           start-text (text/set-text! this "press [space] to start!"
-                                     {:x 100 :y 240
+                                     {:x 95 :y 115
                                       :alpha 0
                                       :fontFamily "Courier New"
                                       :fontSize "16px"
                                       :fontStyle "bold"
                                       :fill "#cccccc"})]
-      (-> this .-add (.image 200 140 "logo"))
-      (-> this .-add (.image 200 60 "logo-text"))
       (oassoc! this :load/loading-text loading-text)
       (oassoc! this :load/start-text start-text)
       (oassoc! this :load/start-text start-text)

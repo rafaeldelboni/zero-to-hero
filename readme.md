@@ -1,4 +1,4 @@
-![logo](docs/header.png)
+![logo](docs/new-logo.png)
 # Zero to Hero
 In Zero to Hero, a puzzle-platformer, you control a formless shadow blob that slowly learns to mimic the abilities of fallen heroes. Starting as an amorphous entity, you gradually acquire movement and  skills like legs to jump higher,  arms to push objects, and a sword to slash objects—each upgrade expanding your traversal options and puzzle-solving capabilities in a Metroidvania-inspired progression. 
 
